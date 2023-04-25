@@ -17,6 +17,7 @@ export default {
 
 <style scoped>
 .contentDiv {
+    height: 100%;
     text-align: center;
     top: 50%;
     transform: translateY(-50%);
@@ -25,10 +26,12 @@ export default {
 
 .sectionDiv {
     z-index: 10;
-    height: 80vh;
+    /*height: 80vh;*/
+  height: 80vh;
 }
 
 .filledBg {
     background-color: #0f0f0f;
+  height: 40vh;
 }
 </style>

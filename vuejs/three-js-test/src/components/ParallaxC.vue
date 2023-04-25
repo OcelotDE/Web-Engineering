@@ -2,23 +2,21 @@
     <div id="fixedDiv"></div>
     <ParallaxRowC ref="bladesRef" :filled-background="false">
         <h1>BIG ROTOR BLADES</h1>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias assumenda consequuntur dolor dolore doloremque eligendi magnam nemo nihil optio. Consectetur enim facere harum itaque omnis pariatur quidem totam voluptatem voluptates?</h2>
+        <h2>Our newest drone has even bigger rotor blades for the best updraft possible</h2>
     </ParallaxRowC>
     <ParallaxRowC :filled-background="true">
-        <h1>SPACEHOLDER</h1>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias assumenda consequuntur dolor dolore doloremque eligendi magnam nemo nihil optio. Consectetur enim facere harum itaque omnis pariatur quidem totam voluptatem voluptates?</h2>
+      <RowItemC :image-left="true" headline="LIGHTWEIGHT" description="In order to make transport as easy as possible, we made our next generation of drones as light as it never has been!" image-src="src/assets/drone-hand.jpg"/>
     </ParallaxRowC>
     <ParallaxRowC ref="cameraRef" :filled-background="false">
-        <h1>WOW CAMERA GO CLICK</h1>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias assumenda consequuntur dolor dolore doloremque eligendi magnam nemo nihil optio. Consectetur enim facere harum itaque omnis pariatur quidem totam voluptatem voluptates?</h2>
+        <h1>4K CAMERA FOOTAGE</h1>
+        <h2>Equipped with the newest technology, our drone is capable of 4K 120fps footage thanks to Hasselblad</h2>
     </ParallaxRowC>
     <ParallaxRowC :filled-background="true">
-        <h1>SPACEHOLDER</h1>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias assumenda consequuntur dolor dolore doloremque eligendi magnam nemo nihil optio. Consectetur enim facere harum itaque omnis pariatur quidem totam voluptatem voluptates?</h2>
+      <RowItemC :image-left="false" headline="ALL-TERRAIN" description="Suited for all kinds of terrain thanks to our intelligent rotor control." image-src="src/assets/drone-rock.jpg"/>
     </ParallaxRowC>
     <ParallaxRowC ref="batteryRef" :filled-background="false">
         <h1>LOOOONG BATTERY LIFE</h1>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias assumenda consequuntur dolor dolore doloremque eligendi magnam nemo nihil optio. Consectetur enim facere harum itaque omnis pariatur quidem totam voluptatem voluptates?</h2>
+        <h2>To make video shootings even better, our drone is able to deliver up to 10 hours of flight time*</h2>
     </ParallaxRowC>
 </template>
 
@@ -28,13 +26,14 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import {useElementVisibility} from "@vueuse/core";
 import {ref} from "vue";
 import ParallaxRowC from "@/components/ParallaxRowC.vue";
+import RowItemC from "@/components/RowItemC.vue";
 
 let cameraVector = null
 let rotation = 0
 
 export default {
     name: "ParallaxC",
-    components: {ParallaxRowC},
+    components: {ParallaxRowC, RowItemC},
     setup() {
         const bladesRef = ref(null);
         const bladesIsVisible = useElementVisibility(bladesRef);
@@ -100,7 +99,7 @@ export default {
     mounted: function () {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-        const renderer = new THREE.WebGLRenderer( { antialias: true } );
+        const renderer = new THREE.WebGLRenderer( { antialias: true, powerPreference: "high-performance" } );
 
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.getElementById("fixedDiv").appendChild( renderer.domElement );
@@ -177,14 +176,10 @@ export default {
 }
 
 h1 {
-    font-family: SFPro, sans-serif!important;
-    font-weight: bold;
     font-size: 10rem;
 }
 
 h2 {
-    font-family: SFPro, sans-serif!important;
-    font-weight: 100;
     font-size: 2rem;
 }
 </style>

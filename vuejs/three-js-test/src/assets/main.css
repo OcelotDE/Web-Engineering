@@ -33,3 +33,13 @@ a,
     padding: 0 2rem;
   }
 }*/
+
+h1 {
+    font-family: SFPro, sans-serif!important;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: SFPro, sans-serif!important;
+    font-weight: 100;
+}
