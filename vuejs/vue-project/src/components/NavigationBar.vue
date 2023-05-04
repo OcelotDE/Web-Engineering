@@ -1,16 +1,29 @@
 <template>
-    <nav>
+    <div>
+      <nav ref="navBar">
         <div id="logo"></div>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
+          <li><a href="#/">Home</a></li>
+          <li><a href="#/weather">Weather</a></li>
+          <li><a href="#/wiki">WikiSearch</a></li>
         </ul>
-    </nav>
+      </nav>
+      <div class="navSpacing"></div>
+    </div>
 </template>
 
 <script>
 export default {
-    name: "NavigationBar"
+    name: "NavigationBar",
+  methods: {
+    updateSpacerSize() {
+      this.$el.querySelector(".navSpacing").style.height = this.$refs.navBar.clientHeight + "px"
+    }
+  },
+  mounted() {
+      this.updateSpacerSize()
+      window.addEventListener( 'resize', this.updateSpacerSize, false );
+  }
 }
 </script>
 
@@ -22,6 +35,10 @@ export default {
     background-color: #fff;
     -webkit-mask: url(../assets/logo.svg) no-repeat center;
     mask: url(../assets/logo.svg) no-repeat center;
+}
+
+.navSpacing {
+  height: 0;
 }
 
 nav {

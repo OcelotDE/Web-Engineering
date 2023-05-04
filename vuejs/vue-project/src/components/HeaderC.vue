@@ -11,10 +11,14 @@ import { useElementVisibility } from "@vueuse/core";
 
 export default {
     name: "HeaderC",
+    props: {
+      presentedText: String,
+      height: String
+    },
     setup() {
         const headerTextRef = ref(null)
         const headerTextIsVisible = useElementVisibility(headerTextRef)
-        const headerText = ref("THE NEW ERA")
+        const headerText = ref("none")
 
         return {
             headerTextRef,
@@ -25,12 +29,16 @@ export default {
 
     mounted:function(){
         document.addEventListener('mousemove', this.mouseMove, false);
+        this.headerText = this.presentedText
+        if (this.height) {
+          document.querySelector("header").style.height = this.height
+        }
     },
 
     data() {
         return {
             headerRendered: false,
-            headerTextFull: "THE NEW ERA"
+            shuffleAmount: 0
         }
     },
 
@@ -59,12 +67,13 @@ export default {
 
         },
         shuffleHeaderText: function () {
+          this.shuffleAmount++
             this.headerText = this.caesarCipher(this.headerText, 1)
             setTimeout(() => {
-                if (this.headerText.toUpperCase() !== "THE`NEW`ERA") {
+                if (this.shuffleAmount < 60) {
                     this.shuffleHeaderText();
                 } else {
-                    this.headerText = this.headerTextFull
+                    this.headerText = this.presentedText
                 }
             }, 10)
         },

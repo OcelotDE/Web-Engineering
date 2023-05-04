@@ -140,12 +140,15 @@ export default {
                 let mixerUpdateDelta = clock.getDelta();
                 mixer.update( mixerUpdateDelta )
 
-                renderer.render( scene, camera );
-                camera.position.lerp(cameraVector, 0.02);
-                if (camera.rotation.x - 0.02 > rotation) {
+                try {
+                  renderer.render( scene, camera );
+                  camera.position.lerp(cameraVector, 0.02);
+                  if (camera.rotation.x - 0.02 > rotation) {
                     camera.rotation.x -= 0.02;
-                } else if (camera.rotation.x + 0.02 < rotation) {
+                  } else if (camera.rotation.x + 0.02 < rotation) {
                     camera.rotation.x += 0.02;
+                  }
+                } catch (e) {
                 }
             }
 

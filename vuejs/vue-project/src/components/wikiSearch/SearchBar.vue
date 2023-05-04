@@ -63,8 +63,8 @@ input {
     height: 20px;
     width: 20px;
     background-color: var(--color-text);
-    -webkit-mask: url(../assets/search.svg) no-repeat center;
-    mask: url(../assets/search.svg) no-repeat center;
+    -webkit-mask: url(../../assets/search.svg) no-repeat center;
+    mask: url(../../assets/search.svg) no-repeat center;
 }
 
 button {

@@ -13,7 +13,8 @@ export default {
 
     data() {
         return {
-            propositionsTimer: 0
+            propositionsTimer: 0,
+            searchText: ""
         }
     },
 
@@ -29,14 +30,12 @@ export default {
 
     methods: {
         runSearch: function () {
-            const searchText = document.getElementById("searchBar").value
-
-            this.fetchWikipedia(searchText)
+            this.fetchWikipedia()
         },
 
-        fetchWikipedia: async function (searchText) {
+        fetchWikipedia: async function () {
             console.log("fetching...")
-            const response = await fetch("https://de.wikipedia.org/w/api.php?action=query&generator=prefixsearch&format=json&gpslimit=4&prop=extracts%7Cdescription&exintro=1&explaintext=1&exsentences=3&redirects=1&gpssearch=" + searchText + "&origin=*&prop=extracts")
+            const response = await fetch("https://de.wikipedia.org/w/api.php?action=query&generator=prefixsearch&format=json&gpslimit=4&prop=extracts%7Cdescription&exintro=1&explaintext=1&exsentences=3&redirects=1&gpssearch=" + this.searchText + "&origin=*&prop=extracts")
 
             const json = await response.json()
             console.log(json)
@@ -53,7 +52,6 @@ export default {
             } else {
                 while(this.propositionsTimer < 10) {
                     await this.sleep(10)
-                    console.log(this.propositionsTimer)
                     this.propositionsTimer++
                 }
                 this.propositionsTimer = 0
@@ -73,37 +71,15 @@ export default {
         },
 
         changeSearchText: function(newText) {
-            document.getElementById("searchBar").value = newText
+            this.searchText = newText
+
 
             this.getPropositions(newText)
         },
 
         sleep: function(milliseconds) {
             return new Promise(resolve => setTimeout(resolve, milliseconds));
-        },
-
-        chatgpt: async function () {
-            const configuration = new Configuration({
-                apiKey: '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'
-            })
-            const openai = new OpenAIApi(configuration)
-            let conversationLog = [{ role: 'system', content: "You are a friendly chatbot." }]
-
-            conversationLog.push({
-                role: 'user',
-                content: "How are you?"
-            })
-
-            const result = await openai.createChatCompletion({
-                model: 'gpt-3.5-turbo',
-                messages: conversationLog
-            })
-
-            console.log(result.data.choices)
         }
-    },
-    mounted: function () {
-        this.chatgpt()
     }
 }
 
@@ -113,7 +89,7 @@ export default {
     <NavigationBar/>
     <PageHeader/>
     <div class="searchDiv">
-        <SearchBar @searchRequested="runSearch()" @searchValueChanged="getPropositions($event)"/>
+        <SearchBar @searchRequested="runSearch()" @searchValueChanged="changeSearchText($event)" :currentSearchText="this.searchText"/>
     </div>
     <div class="searchDiv">
         <PropositionsBox :propositions="propositions" @propositionSelected="changeSearchText($event)"></PropositionsBox>
