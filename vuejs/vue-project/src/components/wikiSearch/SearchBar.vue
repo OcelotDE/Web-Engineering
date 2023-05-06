@@ -1,10 +1,8 @@
 <template>
-    <div class="searchBarBorder colorGradientBackgroundReverse">
-        <form class="colorGradientBackground">
-            <input type="text" name="requestText" id="searchBar" v-model="searchBarText" autocomplete="off">
-            <button type="button" @click="runSearch()"><div class="icon"></div></button>
-        </form>
-    </div>
+  <form>
+    <input type="text" name="requestText" id="searchBar" v-model="searchBarText" autocomplete="off">
+    <button type="button" @click="runSearch()"><div class="icon"></div></button>
+  </form>
 </template>
 
 <script>
@@ -37,15 +35,12 @@ export default {
 
 <style scoped>
 form {
-    background-color: var(--color-background-purple);
-    border-style: none;
+    background-color: var(--color-background);
     border-radius: 30px;
     padding: 10px;
-    margin: 3px;
-}
-.searchBarBorder {
-    border-radius: 30px;
     margin: 10px;
+    border: 1px solid rgba(255, 0, 99, 1);
+    box-shadow: 0px 0 15px rgba(255, 0, 99, 0.5);
 }
 input {
     color: var(--color-text);

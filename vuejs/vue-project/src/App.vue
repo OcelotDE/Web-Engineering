@@ -12,9 +12,10 @@ import Default from './components/pages/DefaultR.vue'
 import Weather from './components/pages/WeatherR.vue'
 import Wiki from './components/pages/WikiR.vue'
 import DefaultR from "@/components/pages/DefaultR.vue";
+import FooterC from "@/components/FooterC.vue";
 
 export default {
-    components: {DefaultR, WeatherC, ItemCard, NavigationBar, VectorImageFill, HeaderC, ItemSection, ParallaxC},
+    components: {FooterC, DefaultR, WeatherC, ItemCard, NavigationBar, VectorImageFill, HeaderC, ItemSection, ParallaxC},
     data() {
       return {
         currentPath: window.location.hash
@@ -51,6 +52,8 @@ const routes = {
     <HeaderC :presentedText="currentView['title']" :height="currentView['height']"/>
 
     <component :is="currentView['component']" />
+
+    <footer-c/>
 </template>
 
 <style>

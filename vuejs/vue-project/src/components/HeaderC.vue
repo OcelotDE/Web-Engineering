@@ -137,4 +137,24 @@ h1 {
     color: black;
     opacity: 0.1;
 }
+
+@media screen and (max-width: 1300px) {
+  #headerTextMain {
+    font-size: 500%;
+  }
+
+  #headerTextBackground {
+    font-size: 550%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #headerTextMain {
+    font-size: 300%;
+  }
+
+  #headerTextBackground {
+    font-size: 330%;
+  }
+}
 </style>
