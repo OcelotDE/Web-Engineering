@@ -1,7 +1,7 @@
 <template>
     <header>
-        <h1 id="headerTextBackground" ref="headerTextRef">{{ headerText }}</h1>
-        <h1 id="headerTextMain" class="colorGradient" ref="headerTextRef">{{ headerText }}</h1>
+        <h1 id="headerTextBackground">{{ headerText }}</h1>
+        <h1 id="headerTextMain" class="colorGradient">{{ headerText }}</h1>
     </header>
 </template>
 
@@ -30,9 +30,8 @@ export default {
     mounted:function(){
         document.addEventListener('mousemove', this.mouseMove, false);
         this.headerText = this.presentedText
-        if (this.height) {
-          document.querySelector("header").style.height = this.height
-        }
+        this.updateHeight()
+        this.updateTitle()
     },
 
     data() {
@@ -48,6 +47,12 @@ export default {
                 this.headerRendered = true
                 this.shuffleHeaderText()
             }
+        },
+        height: function () {
+          this.updateHeight()
+        },
+        presentedText: function () {
+          this.updateTitle()
         }
     },
     expose: ['caesarCipher', 'shuffleHeaderText'],
@@ -86,6 +91,16 @@ export default {
             let y_bg = y * multiplierB
             document.getElementById("headerTextBackground").style.transform = `translate(${x_bg}px, ${y_bg}px)`
             document.getElementById("headerTextMain").style.transform = `translate(${x}px, ${y}px)`
+        },
+        updateHeight() {
+          if (this.height) {
+            document.querySelector("header").style.height = this.height
+          }
+        },
+        updateTitle() {
+          this.shuffleAmount = 0
+          this.headerText = this.presentedText
+          this.shuffleHeaderText()
         }
     },
 }
@@ -104,6 +119,7 @@ header {
     align-items: center;
     overflow: hidden;
     cursor: default;
+  transition: height 400ms;
 }
 
 h1 {

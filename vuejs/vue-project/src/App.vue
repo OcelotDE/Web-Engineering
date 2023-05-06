@@ -26,6 +26,9 @@ export default {
       },
       currentTitle() {
         return routes[this.currentPath.slice(1) || '/'].name || NotFound.name
+      },
+      currentHeight() {
+        return routes[this.currentPath.slice(1) || '/'].name || NotFound.name
       }
     },
     mounted() {
@@ -36,17 +39,18 @@ export default {
 }
 
 const routes = {
-  '/': Default,
-  '/weather': Weather,
-  '/wiki': Wiki
+  '/': {"component": Default, "height": "100vh", "title": "A NEW ERA"},
+  '/weather': {"component": Weather, "height": "0", "title": ""},
+  '/wiki': {"component": Wiki, "height": "30vh", "title": "WIKI SEARCH"}
 }
 
 </script>
 
 <template>
     <NavigationBar/>
+    <HeaderC :presentedText="currentView['title']" :height="currentView['height']"/>
 
-    <component :is="currentView" />
+    <component :is="currentView['component']" />
 </template>
 
 <style>

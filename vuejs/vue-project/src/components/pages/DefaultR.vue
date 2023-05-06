@@ -1,5 +1,4 @@
 <template>
-  <HeaderC presentedText="A NEW ERA"/>
   <div id="items">
     <ItemCard title="Solid movement" description="Always reliable, even in the roughest terrain."  imageUrl="./src/assets/drone-rock.jpg">
       <VectorImageFill>
