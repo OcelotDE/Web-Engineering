@@ -1,5 +1,6 @@
 <template>
     <div>
+      <div class="navSpacing"></div>
       <nav ref="navBar">
         <div id="logo"></div>
         <ul>
@@ -8,7 +9,6 @@
           <li><a href="#/wiki">WikiSearch</a></li>
         </ul>
       </nav>
-      <div class="navSpacing"></div>
     </div>
 </template>
 
@@ -39,12 +39,16 @@ export default {
 
 .navSpacing {
   height: 0;
+  position: relative;
+  background-color: var(--color-background);
 }
 
 nav {
     position: fixed;
+    top: 0;
     z-index: 100;
-    background-color: rgba(30, 31, 36, 0.98);
+    background-color: rgba(30, 31, 36, 0.5);
+    backdrop-filter: blur(20px);
     padding: 10px 40px;
     width: 100%;
 
