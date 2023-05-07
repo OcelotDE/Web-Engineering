@@ -1,6 +1,6 @@
 <template>
     <div class="flexDiv" :class="{ flexFull: showDescription }">
-        <div class="itemCard colorGradientBackground">
+        <div class="itemCard">
             <div id="itemThumbnail">
                 <!--<img src="" alt="Item header image">-->
                 <h1>{{ title }}</h1>
@@ -59,11 +59,13 @@ export default {
 
 <style scoped>
 .itemCard {
-    background-color: var(--color-background-purple);
+    background-color: var(--color-background);
     border-radius: 10px;
     margin: 0 30px;
     padding-top: 10px;
     animation: fadeIn ease-in-out 2000ms;
+    border: 1px solid var(--accent-c-pink-verylow-visibility);
+    box-shadow: 0px 0 15px var(--accent-c-pink-verylow-visibility);
 }
 
 .itemCard > div:first-child {

@@ -44,6 +44,7 @@ export default {
         const batteryIsVisible = useElementVisibility(batteryRef);
         const camera = ref(null);
         const renderer = ref(null);
+        const performanceMode = ref(false);
 
         return {
             bladesRef,
@@ -53,7 +54,8 @@ export default {
             batteryRef,
             batteryIsVisible,
             camera,
-            renderer
+            renderer,
+            performanceMode
         }
     },
 
@@ -69,6 +71,13 @@ export default {
         setCameraToDroneBattery: function () {
             cameraVector = new THREE.Vector3(0, -1.8, .35);
             rotation = 1.5
+        },
+        onWindowResize: function (){
+          if (this.camera == null || this.renderer == null) return
+          this.camera.aspect = window.innerWidth / window.innerHeight;
+          this.camera.updateProjectionMatrix();
+
+          this.renderer.setSize( window.innerWidth, window.innerHeight );
         }
     },
 
@@ -94,6 +103,10 @@ export default {
     },
 
     mounted: function () {
+        this.performanceMode = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
+
+        if (this.performanceMode) return
+
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
         const renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -102,6 +115,37 @@ export default {
         document.getElementById("fixedDiv").appendChild( renderer.domElement );
         renderer.setClearColor(window.matchMedia("(prefers-color-scheme: dark)").matches ? 0x131313 : 0xffffff);
         renderer.setClearColor()
+
+        /*const texArr = [
+            'src/assets/skybox/posx.jpg',
+          'src/assets/skybox/negx.jpg',
+          'src/assets/skybox/posy.jpg',
+          'src/assets/skybox/negy.jpg',
+          'src/assets/skybox/negz.jpg',
+          'src/assets/skybox/posz.jpg'
+        ]*/
+
+      const texArr = [
+        'src/assets/skybox/negx.jpg',
+        'src/assets/skybox/posx.jpg',
+        'src/assets/skybox/posy.jpg',
+        'src/assets/skybox/negy.jpg',
+        'src/assets/skybox/negz.jpg',
+        'src/assets/skybox/posz.jpg'
+      ]
+
+        const materialArray = [];
+
+        texArr.forEach(element => {
+          const texture = new THREE.TextureLoader().load(element)
+          const mat = new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide });
+          materialArray.push(mat)
+        });
+
+        const skyboxGeo = new THREE.BoxGeometry(1000, 1000, 1000);
+        const skybox = new THREE.Mesh(skyboxGeo, materialArray);
+
+        scene.add(skybox);
 
         window.addEventListener( 'resize', this.onWindowResize, false );
 
@@ -130,7 +174,7 @@ export default {
 
             // Play all animations
             clips.forEach( function ( clip ) {
-                mixer.clipAction( clip ).play();
+              mixer.clipAction( clip ).play();
             } );
 
 
@@ -173,15 +217,15 @@ export default {
 <style scoped>
 #fixedDiv {
     position: fixed;
-  top: 0;
+    top: 0;
     z-index: -1;
 }
 
 h1 {
-    font-size: 10rem;
+    font-size: 13vw;
 }
 
 h2 {
-    font-size: 2rem;
+    font-size: 3vw;
 }
 </style>

@@ -33,8 +33,10 @@ export default {
 
 <style scoped>
 #items {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  /*grid-template-columns: 1fr 1fr;*/
   background: var(--color-background);
 }
 </style>

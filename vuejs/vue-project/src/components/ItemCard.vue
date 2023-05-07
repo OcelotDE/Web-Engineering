@@ -1,12 +1,12 @@
 <template>
   <div>
-      <h1 class="colorGradient">{{ title }}</h1>
+      <h1>{{ title }}</h1>
       <span>{{ description }}</span>
       <slot/>
       <br/>
       <div id="imageContainer">
           <img v-bind:src="imageUrl" alt=""/>
-          <button><h2 class="colorGradient">See more</h2></button>
+          <button><h2>See more</h2></button>
       </div>
   </div>
 </template>
@@ -31,9 +31,11 @@ export default {
 
 <style scoped>
   div {
+      flex: 1 1 0;
       background: var(--color-background-soft);
       border-radius: 10px;
       margin: 30px 70px;
+      min-width: 35%;
   }
 
   * {
@@ -50,9 +52,10 @@ export default {
   }
 
   h1 {
-      font-family: SFPro;
+      font-family: SFPro, sans-serif;
       font-weight: bold;
       font-size: 40px;
+      color: var(--accent-c-pink-full-visibility)
   }
 
   span {
@@ -92,6 +95,6 @@ export default {
       font-family: SFPro,serif;
       font-size: 15px;
       font-weight: 200;
-      color: white;
+      color: var(--accent-c-pink-low-visibility)
   }
 </style>

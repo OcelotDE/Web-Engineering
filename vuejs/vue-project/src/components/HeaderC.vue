@@ -1,7 +1,10 @@
 <template>
-    <header>
-        <h1 id="headerTextBackground">{{ headerText }}</h1>
-        <h1 id="headerTextMain" class="colorGradient">{{ headerText }}</h1>
+    <header ref="header">
+        <!--<h1 id="headerTextBackground">{{ headerText }}</h1>
+        <h1 id="headerTextMain" class="colorGradient">{{ headerText }}</h1>-->
+      <h1 class="headerTextBackground" v-show="this.$refs?.header?.clientHeight > 300">{{ headerText }}</h1>
+      <h1 id="headerTextMain">{{ headerText }}</h1>
+      <h1 class="headerTextBackground" v-show="this.$refs?.header?.clientHeight > 300">{{ headerText }}</h1>
     </header>
 </template>
 
@@ -89,8 +92,9 @@ export default {
             let y = (event.clientY / window.screen.height - 0.5) * -1 * multiplierA
             let x_bg = x * multiplierB
             let y_bg = y * multiplierB
-            document.getElementById("headerTextBackground").style.transform = `translate(${x_bg}px, ${y_bg}px)`
+            document.getElementsByClassName("headerTextBackground")[0].style.transform = `translate(${x_bg}px, ${y_bg + 200}px)`
             document.getElementById("headerTextMain").style.transform = `translate(${x}px, ${y}px)`
+            document.getElementsByClassName("headerTextBackground")[1].style.transform = `translate(${x_bg}px, ${y_bg - 200}px)`
         },
         updateHeight() {
           if (this.height) {
@@ -131,11 +135,10 @@ h1 {
     font-size: 1400%;
 }
 
-#headerTextBackground {
+.headerTextBackground {
     font-size: 1500%;
     position: absolute;
     color: black;
-    opacity: 0.1;
 }
 
 @media screen and (max-width: 1300px) {
@@ -143,7 +146,7 @@ h1 {
     font-size: 500%;
   }
 
-  #headerTextBackground {
+  .headerTextBackground {
     font-size: 550%;
   }
 }
@@ -153,8 +156,19 @@ h1 {
     font-size: 300%;
   }
 
-  #headerTextBackground {
+  .headerTextBackground {
     font-size: 330%;
   }
+}
+
+#headerTextMain {
+  color: white;
+}
+
+.headerTextBackground {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 3px white;
+  opacity: 0.3;
 }
 </style>

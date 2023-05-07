@@ -29,6 +29,8 @@ export default {
 .itemRowDiv {
   flex: 1 1 0;
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
   height: 100%;
   padding: 2%;
 }
@@ -43,7 +45,6 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   width: 50%;
-  height: 100%;
   border-radius: 10px;
 }
 
@@ -54,6 +55,6 @@ export default {
 }
 
 h1 {
-  font-size: 5rem;
+  font-size: 5vw;
 }
 </style>

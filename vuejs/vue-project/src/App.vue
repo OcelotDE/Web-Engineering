@@ -53,7 +53,7 @@ const routes = {
 
     <component :is="currentView['component']" />
 
-    <footer-c/>
+    <FooterC/>
 </template>
 
 <style>

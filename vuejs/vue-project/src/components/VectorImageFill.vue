@@ -6,9 +6,8 @@
         <defs>
             <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse"
                             gradientTransform="matrix(3397,0,0,1453.78,25,1240.16)">
-                <stop offset="0" style="stop-color:#ff8400;stop-opacity:1"/>
-                <stop offset="0.53" style="stop-color:#a73aa0;stop-opacity:1"/>
-                <stop offset="1" style="stop-color:#861edc;stop-opacity:1"/>
+                <stop offset="0" style="stop-color:var(--accent-c-pink-full-visibility);stop-opacity:1"/>
+                <stop offset="1" style="stop-color:var(--accent-c-pink-verylow-visibility);stop-opacity:1"/>
             </linearGradient>
         </defs>
     </svg>
@@ -76,7 +75,7 @@ export default {
 
 <style scoped>
 svg {
-    width: 400px;
+    width: 100%;
     opacity: 0.3;
 }
 </style>

@@ -3,35 +3,62 @@
       <div class="navSpacing"></div>
       <nav ref="navBar">
         <div id="logo"></div>
-        <ul>
-          <li><a href="#/">Home</a></li>
-          <li><a href="#/weather">Weather</a></li>
-          <li><a href="#/wiki">WikiSearch</a></li>
-        </ul>
+        <div id="desktopNavbar">
+          <ul>
+            <li><a href="#/">Home</a></li>
+            <li><a href="#/weather">Weather</a></li>
+            <li><a href="#/wiki">WikiSearch</a></li>
+          </ul>
+        </div>
       </nav>
     </div>
 </template>
 
 <script>
+import {ref} from "vue";
+
 export default {
     name: "NavigationBar",
+  setup() {
+    const mobileView = ref(false)
+    const showMobileNav = ref(false)
+
+    return {
+      mobileView,
+      showMobileNav
+    }
+  },
   methods: {
+      updateValues() {
+        if (window.innerWidth < 800 && !this.mobileView) {
+          this.mobileView = true
+        } else if (window.innerWidth >= 800 && this.mobileView) {
+          this.mobileView = false
+        }
+        this.updateSpacerSize()
+      },
     updateSpacerSize() {
       this.$el.querySelector(".navSpacing").style.height = this.$refs.navBar.clientHeight + "px"
     }
   },
   mounted() {
       this.updateSpacerSize()
-      window.addEventListener( 'resize', this.updateSpacerSize, false );
+      window.addEventListener( 'resize', this.updateValues, false );
   }
 }
 </script>
 
 <style scoped>
 
+button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 #logo {
-    height: 5vh;
-    width: 5vh;
+    height: 2rem;
+    width: 2rem;
     background-color: #fff;
     -webkit-mask: url(../assets/logo.svg) no-repeat center;
     mask: url(../assets/logo.svg) no-repeat center;
@@ -52,6 +79,8 @@ nav {
     padding: 10px 40px;
     width: 100%;
 
+    transition: all 1s;
+
     display:flex;
     justify-content: space-between;
     align-items: center;
@@ -66,10 +95,15 @@ nav ul li {
     padding: 0 20px;
 }
 
+nav ul li {
+  padding: 5px 20px;
+  text-align: center;
+}
+
 nav ul li a {
     text-decoration: none;
     color: #989898;
-    font-size: 1.3vh;
+    font-size: .8rem;
     font-weight: bold;
     transition-duration: 400ms;
     background: linear-gradient(90deg, #ffffff 0%, #ffffff 45%, #FF8400 55%, #861EDC 100%);

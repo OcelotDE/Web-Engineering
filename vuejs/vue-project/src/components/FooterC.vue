@@ -12,10 +12,12 @@ export default {
 
 <style scoped>
   footer {
+    margin-top: 10px;
     background-color: rgba(30, 31, 36, 0.5);
     backdrop-filter: blur(20px);
     padding: 30px;
     text-align: center;
+    bottom: 0;
   }
 
   p {

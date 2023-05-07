@@ -1,4 +1,5 @@
 /* color palette from <https://github.com/vuejs/theme> */
+
 :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
@@ -23,6 +24,10 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  --accent-c-pink-full-visibility: rgba(255, 0, 99, 1);
+  --accent-c-pink-low-visibility: rgba(255, 0, 99, 0.5);
+  --accent-c-pink-verylow-visibility: rgba(255, 0, 99, 0.3);
 }
 
 /* semantic color variables for this project */
@@ -124,7 +129,11 @@ body {
 }
 
 .colorGradient {
-  background: linear-gradient(90deg, #FF8400 0%, #861EDC 100%);
+  background: linear-gradient(90deg, var(--accent-c-pink-full-visibility) 0%, var(--accent-c-pink-low-visibility) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+h1, h2 {
+  font-family: SFPro, sans-serif;
 }

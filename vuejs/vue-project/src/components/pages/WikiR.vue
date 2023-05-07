@@ -92,6 +92,7 @@ export default {
     <PropositionsBox :propositions="propositions" @propositionSelected="changeSearchText($event)"></PropositionsBox>
   </div>
   <ItemsContainer :searchResultsList="searchResultsList"></ItemsContainer>
+  <div class="padding" v-show="searchResultsList.length === 0"></div>
 </template>
 
 <style>
@@ -99,5 +100,9 @@ export default {
   display: flex;
   justify-content: center;
   background-color: var(--color-background-mute);
+}
+
+.padding {
+  height: 60vh;
 }
 </style>

@@ -39,8 +39,8 @@ form {
     border-radius: 30px;
     padding: 10px;
     margin: 10px;
-    border: 1px solid rgba(255, 0, 99, 1);
-    box-shadow: 0px 0 15px rgba(255, 0, 99, 0.5);
+    border: 1px solid var(--accent-c-pink-full-visibility);
+    box-shadow: 0px 0 15px var(--accent-c-pink-low-visibility);
 }
 input {
     color: var(--color-text);
