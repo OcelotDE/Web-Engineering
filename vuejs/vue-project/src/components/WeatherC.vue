@@ -91,7 +91,7 @@ export default {
 
 
         var init = [];
-        var maxParts = 1000;
+        var maxParts = 400;
         for(var a = 0; a < maxParts; a++) {
           init.push({
             x: Math.random() * w,

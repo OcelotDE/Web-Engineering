@@ -17,7 +17,7 @@ export default {
 
 <style scoped>
 .contentDiv {
-    /*height: 100%;*/
+    height: 100%;
     text-align: center;
     top: 50%;
     transform: translateY(-50%);

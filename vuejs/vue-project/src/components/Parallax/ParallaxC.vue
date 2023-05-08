@@ -145,7 +145,7 @@ export default {
         const skyboxGeo = new THREE.BoxGeometry(1000, 1000, 1000);
         const skybox = new THREE.Mesh(skyboxGeo, materialArray);
 
-        scene.add(skybox);
+        //scene.add(skybox);
 
         window.addEventListener( 'resize', this.onWindowResize, false );
 
