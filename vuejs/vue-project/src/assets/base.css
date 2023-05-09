@@ -4,14 +4,10 @@
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
-  --vt-c-white-purple: #c6a9e8;
-  --vt-c-white-purple-soft: #cebde1;
 
   --vt-c-black: #181818;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
-  --vt-c-black-purple: #1c0c2f;
-  --vt-c-black-purple-soft: #522b80;
 
   --vt-c-indigo: #2c3e50;
 
@@ -24,10 +20,6 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
-
-  --accent-c-pink-full-visibility: rgba(255, 0, 99, 1);
-  --accent-c-pink-low-visibility: rgba(255, 0, 99, 0.5);
-  --accent-c-pink-verylow-visibility: rgba(255, 0, 99, 0.3);
 }
 
 /* semantic color variables for this project */
@@ -46,6 +38,18 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  --vt-c-white-purple: #c6a9e8;
+  --vt-c-white-purple-soft: #cebde1;
+
+  --vt-c-black-purple: #1c0c2f;
+  --vt-c-black-purple-soft: #522b80;
+
+  --accent-c-pink-full-visibility: rgba(255, 0, 99, 1);
+  --accent-c-pink-low-visibility: rgba(255, 0, 99, 0.5);
+  --accent-c-pink-verylow-visibility: rgba(255, 0, 99, 0.3);
+
+  --border-radius: 20px;
 }
 
 .colorGradientBackground {

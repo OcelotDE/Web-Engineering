@@ -23,7 +23,7 @@ export default {
     description: String,
     productImagePath: String,
     price: Number,
-    features: [String]
+    features: Array
   }
 }
 </script>

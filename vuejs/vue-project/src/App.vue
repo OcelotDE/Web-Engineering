@@ -13,30 +13,35 @@ import Weather from './components/pages/WeatherR.vue'
 import Wiki from './components/pages/WikiR.vue'
 import DefaultR from "@/components/pages/DefaultR.vue";
 import FooterC from "@/components/FooterC.vue";
+import ErrorC from "@/components/ErrorC.vue";
 
 export default {
-    components: {FooterC, DefaultR, WeatherC, ItemCard, NavigationBar, VectorImageFill, HeaderC, ItemSection, ParallaxC},
+    components: {
+      ErrorC,
+      FooterC, DefaultR, WeatherC, ItemCard, NavigationBar, VectorImageFill, HeaderC, ItemSection, ParallaxC},
     data() {
       return {
-        currentPath: window.location.hash
+        currentPath: window.location.hash,
+        currentErrorCode: "400",
+        currentErrorMessage: "test"
       }
     },
     computed: {
       currentView() {
         return routes[this.currentPath.slice(1) || '/'] || NotFound
-      },
-      currentTitle() {
-        return routes[this.currentPath.slice(1) || '/'].name || NotFound.name
-      },
-      currentHeight() {
-        return routes[this.currentPath.slice(1) || '/'].name || NotFound.name
       }
     },
     mounted() {
       window.addEventListener('hashchange', () => {
         this.currentPath = window.location.hash
       })
-    }
+    },
+  methods: {
+      clearErrorMessage: function () {
+        this.currentErrorCode = null;
+        this.currentErrorMessage = null;
+      }
+  }
 }
 
 const routes = {
@@ -53,6 +58,7 @@ const routes = {
 
     <component :is="currentView['component']" />
 
+    <ErrorC :error-code="currentErrorCode" :error-message="currentErrorMessage" @errorMessageClear="clearErrorMessage"/>
     <FooterC/>
 </template>
 

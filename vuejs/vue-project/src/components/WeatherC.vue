@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <h1>Todays temperature is </h1>
+  <div class="mainDiv">
+    <h1>Todays temperature is</h1>
     <h1>{{ degreeNow }} °C</h1>
-    <p>Nothing can stop this drone from flying at these temperatures!</p>
+    <p>Nothing can stop our drone from flying at these temperatures!</p>
+    <img ref="weatherImage" src="" alt="">
+    <p>{{ weatherNow }}? No need to worry.</p>
   </div>
   <canvas id="canvas"></canvas>
 </template>
@@ -15,10 +17,12 @@ export default {
   name: "WeatherC",
   setup() {
     const degreeNow = ref(0);
+    const weatherNow = ref(null);
     const canvasTimeoutId = ref(null)
 
     return {
       degreeNow,
+      weatherNow,
       canvasTimeoutId
     }
   },
@@ -41,6 +45,8 @@ export default {
       let data = await response.json()
       console.log(data)
       this.degreeNow = data?.list[0]?.main?.temp;
+      this.weatherNow = data?.list[0]?.weather[0]?.main
+      this.$refs.weatherImage.src = "https://openweathermap.org/img/wn/" + data?.list[0]?.weather[0]?.icon + "@4x.png"
       this.setCanvasWeather(data?.list[0]?.weather[0]?.main);
     },
     setCanvasWeather: function (weatherString) {
@@ -143,11 +149,27 @@ export default {
   div {
     text-align: center;
   }
+
   #canvas {
     position: fixed;
     width: 100%;
     height: 100%;
     z-index: -1;
     top: 0;
+  }
+
+  .mainDiv {
+    margin: 20px;
+    padding: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    background-color: rgba(30, 31, 36, 0.5);
+    backdrop-filter: blur(20px);
+    border-radius: var(--border-radius);
+  }
+
+  img {
+    width: 100px;
   }
 </style>

@@ -54,9 +54,6 @@ export default {
     return {
       drones
     }
-  },
-  mounted: function () {
-    this.drones[0].Description
   }
 }
 </script>

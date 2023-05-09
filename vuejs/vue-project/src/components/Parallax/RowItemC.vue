@@ -19,7 +19,6 @@ export default {
     imageSrc: String
   },
   mounted: function () {
-    console.log(this.$el.querySelector("#imageDiv"))
     this.$el.querySelector("#imageDiv").style.backgroundImage = `url("${this.imageSrc}")`
   }
 }
