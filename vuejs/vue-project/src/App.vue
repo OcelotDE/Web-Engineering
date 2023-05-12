@@ -7,60 +7,116 @@ import ItemCard from "@/components/ItemCard.vue";
 import ParallaxC from "@/components/Parallax/ParallaxC.vue";
 import WeatherC from "@/components/WeatherC.vue";
 
-import NotFound from './components/pages/404R.vue'
-import Default from './components/pages/DefaultR.vue'
-import Weather from './components/pages/WeatherR.vue'
-import Wiki from './components/pages/WikiR.vue'
-import DefaultR from "@/components/pages/DefaultR.vue";
+import NotFound from "./components/pages/404R.vue";
+import Default from "./components/pages/DefaultR.vue";
+import Weather from "./components/pages/WeatherR.vue";
+import Wiki from "./components/pages/WikiR.vue";
+import Stocks from "./components/pages/StocksR.vue";
+import Contact from "./components/pages/ContactR.vue";
+
 import FooterC from "@/components/FooterC.vue";
 import ErrorC from "@/components/ErrorC.vue";
+import { shallowRef } from "vue";
 
 export default {
-    components: {
-      ErrorC,
-      FooterC, DefaultR, WeatherC, ItemCard, NavigationBar, VectorImageFill, HeaderC, ItemSection, ParallaxC},
-    data() {
-      return {
-        currentPath: window.location.hash,
-        currentErrorCode: "400",
-        currentErrorMessage: "test"
-      }
+  components: {
+    ErrorC,
+    FooterC,
+    WeatherC,
+    ItemCard,
+    NavigationBar,
+    VectorImageFill,
+    HeaderC,
+    ItemSection,
+    ParallaxC,
+  },
+  data() {
+    return {
+      currentPath: window.location.hash,
+      currentErrorCode: null,
+      currentErrorMessage: null,
+      routes: {
+        "/": {
+          Component: shallowRef(Default),
+          HeaderHeight: "100vh",
+          HeaderTitle: "A NEW ERA",
+          NavTitle: "Home",
+          NavRoute: "",
+        },
+        "/weather": {
+          Component: shallowRef(Weather),
+          HeaderHeight: "0",
+          HeaderTitle: "",
+          NavTitle: "Weather",
+          NavRoute: "weather",
+        },
+        "/stocks": {
+          Component: shallowRef(Stocks),
+          HeaderHeight: "30vh",
+          HeaderTitle: "STOCKS VIEWER",
+          NavTitle: "Stocks",
+          NavRoute: "stocks",
+        },
+        "/wiki": {
+          Component: shallowRef(Wiki),
+          HeaderHeight: "30vh",
+          HeaderTitle: "WIKI SEARCH",
+          NavTitle: "WikiSearch",
+          NavRoute: "wiki",
+        },
+        "/contact": {
+          Component: shallowRef(Contact),
+          HeaderHeight: "30vh",
+          HeaderTitle: "CONTACT",
+          NavTitle: "Contact",
+          NavRoute: "contact",
+        },
+      },
+    };
+  },
+  computed: {
+    currentView() {
+      const NotFoundComponent = { component: NotFound, height: "0", title: "" };
+      return this.routes[this.currentPath.slice(1) || "/"] || NotFoundComponent;
     },
-    computed: {
-      currentView() {
-        return routes[this.currentPath.slice(1) || '/'] || NotFound
-      }
-    },
-    mounted() {
-      window.addEventListener('hashchange', () => {
-        this.currentPath = window.location.hash
-      })
-    },
+  },
+  mounted() {
+    window.addEventListener("hashchange", () => {
+      this.currentPath = window.location.hash;
+    });
+  },
   methods: {
-      clearErrorMessage: function () {
-        this.currentErrorCode = null;
-        this.currentErrorMessage = null;
-      }
-  }
-}
-
-const routes = {
-  '/': {"component": Default, "height": "100vh", "title": "A NEW ERA"},
-  '/weather': {"component": Weather, "height": "0", "title": ""},
-  '/wiki': {"component": Wiki, "height": "30vh", "title": "WIKI SEARCH"}
-}
-
+    shallowRef,
+    clearErrorMessage: function () {
+      this.currentErrorCode = null;
+      this.currentErrorMessage = null;
+    },
+    setErrorMessage: function (code, msg) {
+      this.currentErrorCode = code;
+      this.currentErrorMessage = msg;
+    },
+  },
+};
 </script>
 
 <template>
-    <NavigationBar/>
-    <HeaderC :presentedText="currentView['title']" :height="currentView['height']"/>
+  <NavigationBar :navigation-options="routes" />
+  <HeaderC
+    :presentedText="currentView.HeaderTitle"
+    :height="currentView.HeaderHeight"
+  />
 
-    <component :is="currentView['component']" />
+  <component
+    :is="currentView.Component"
+    @errorOnFetch="setErrorMessage($event.errorCode, $event.errorMsg)"
+  />
 
-    <ErrorC :error-code="currentErrorCode" :error-message="currentErrorMessage" @errorMessageClear="clearErrorMessage"/>
-    <FooterC/>
+  <ErrorC
+    :error-code="currentErrorCode"
+    :error-message="currentErrorMessage"
+    @errorMessageClear="clearErrorMessage"
+  />
+  <FooterC />
 </template>
 
-<style>
-</style>
+<style></style>

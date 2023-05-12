@@ -8,13 +8,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^4.0.7",
+    "@unhead/vue": "^1.1.26",
     "@vueuse/components": "^9.13.0",
     "@vueuse/core": "^9.13.0",
+    "chart.js": "^4.3.0",
     "three": "^0.151.3",
-    "vue": "^3.2.47"
+    "vee-validate": "^4.9.2",
+    "vue": "^3.2.47",
+    "vue-chartjs": "^5.2.0",
+    "vue-recaptcha": "^3.0.0-alpha.2",
+    "yahoo-finance": "^0.3.8",
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
+    "prettier": "^2.8.8",
     "vite": "^4.1.4"
   }
 }

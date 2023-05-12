@@ -6,6 +6,13 @@
     <img ref="weatherImage" src="" alt="">
     <p>{{ weatherNow }}? No need to worry.</p>
   </div>
+  <div class="secondDiv">
+    <div class="weatherDayDiv" v-for="data in weatherData" v-show="validateData(data?.dt)">
+      <h1>{{ getWeekDay(data.dt_txt) }}</h1>
+      <h2>{{ data.main.temp }} °C</h2>
+      <img :src="'https://openweathermap.org/img/wn/' + data?.weather[0]?.icon + '@4x.png'" alt="">
+    </div>
+  </div>
   <canvas id="canvas"></canvas>
 </template>
 
@@ -18,12 +25,14 @@ export default {
   setup() {
     const degreeNow = ref(0);
     const weatherNow = ref(null);
-    const canvasTimeoutId = ref(null)
+    const canvasTimeoutId = ref(null);
+    const weatherData = ref(null);
 
     return {
       degreeNow,
       weatherNow,
-      canvasTimeoutId
+      canvasTimeoutId,
+      weatherData
     }
   },
   mounted() {
@@ -40,10 +49,27 @@ export default {
 
   },
   methods: {
+    validateData: function (dt) {
+      if (!dt || !this.weatherData) return false
+      return (dt - this.weatherData[0]?.dt) % 86400 === 0
+    },
+    getWeekDay: function (dateString) {
+      let dayNmbr = new Date(dateString).getUTCDay();
+      switch (dayNmbr) {
+        case 0: return "Sunday";
+        case 1: return "Monday";
+        case 2: return "Tuesday";
+        case 3: return "Wednesday";
+        case 4: return "Thursday";
+        case 5: return "Friday";
+        case 6: return "Saturday";
+        default: return "N/A";
+      }
+    },
     getData: async function (position) {
       let response = await fetch("http://api.openweathermap.org/data/2.5/forecast?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&appid="+ import.meta.env.VITE_WEATHER_KEY + "&mode=JSON&units=metric")
       let data = await response.json()
-      console.log(data)
+      this.weatherData = data?.list;
       this.degreeNow = data?.list[0]?.main?.temp;
       this.weatherNow = data?.list[0]?.weather[0]?.main
       this.$refs.weatherImage.src = "https://openweathermap.org/img/wn/" + data?.list[0]?.weather[0]?.icon + "@4x.png"
@@ -159,7 +185,7 @@ export default {
   }
 
   .mainDiv {
-    margin: 20px;
+    margin: 30px 0;
     padding: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -169,7 +195,32 @@ export default {
     border-radius: var(--border-radius);
   }
 
+  .secondDiv {
+    margin-bottom: 20vh;
+    padding: 20px;
+    left: 50%;
+    width: 80%;
+    transform: translateX(-50%);
+    background-color: rgba(30, 31, 36, 0.5);
+    backdrop-filter: blur(20px);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
   img {
     width: 100px;
+  }
+
+  .weatherDayDiv {
+    flex: 1 1 0;
+    padding: 10px;
+  }
+
+  @media screen and (max-width: 900px) {
+    .mainDiv {
+      width: 80%;
+    }
   }
 </style>

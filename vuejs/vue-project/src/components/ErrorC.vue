@@ -20,6 +20,7 @@
 <script>
 export default {
   name: "ErrorC",
+  emits: ["errorMessageClear"],
   props: {
     errorCode: String,
     errorMessage: String

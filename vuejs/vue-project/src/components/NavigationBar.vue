@@ -5,9 +5,10 @@
         <div id="logo"></div>
         <div id="items">
           <ul :class="{ mobileHide: showMobileNav }" ref="navList">
-            <li><a href="#/">Home</a></li>
+            <li v-for="option in navigationOptions"><a :href="'#/' + option.NavRoute">{{ option.NavTitle }}</a></li>
+            <!--<li><a href="#/">Home</a></li>
             <li><a href="#/weather">Weather</a></li>
-            <li><a href="#/wiki">WikiSearch</a></li>
+            <li><a href="#/wiki">WikiSearch</a></li>-->
           </ul>
         </div>
         <span id="toggleMobileNav" @click="showMobileNav = !showMobileNav; updateSpacerSize">
@@ -32,6 +33,9 @@ import {ref} from "vue";
 
 export default {
     name: "NavigationBar",
+    props: {
+      navigationOptions: Object
+    },
   setup() {
     const mobileView = ref(false)
     const showMobileNav = ref(false)
@@ -57,6 +61,7 @@ export default {
   mounted() {
       this.updateSpacerSize()
       window.addEventListener( 'resize', this.updateValues, false );
+      console.log(this.navigationOptions)
   }
 }
 </script>
