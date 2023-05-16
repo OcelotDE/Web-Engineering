@@ -35,6 +35,7 @@ export default {
       currentPath: window.location.hash,
       currentErrorCode: null,
       currentErrorMessage: null,
+      errors: [],
       routes: {
         "/": {
           Component: shallowRef(Default),
@@ -87,13 +88,19 @@ export default {
   },
   methods: {
     shallowRef,
-    clearErrorMessage: function () {
-      this.currentErrorCode = null;
-      this.currentErrorMessage = null;
+    clearErrorMessage: function (toRemoveIndex) {
+      this.errors.splice(toRemoveIndex, 1);
+      this.updateErrorIndices();
     },
-    setErrorMessage: function (code, msg) {
-      this.currentErrorCode = code;
-      this.currentErrorMessage = msg;
+    updateErrorIndices: function () {
+      let index = 0;
+      this.errors.forEach((error) => {
+        error.Index = index;
+        index++;
+      });
+    },
+    addErrorMessage: function (code, msg) {
+      this.errors.push({ Code: code, Message: msg, Index: this.errors.length });
     },
   },
 };
@@ -108,15 +115,33 @@ export default {
 
   <component
     :is="currentView.Component"
-    @errorOnFetch="setErrorMessage($event.errorCode, $event.errorMsg)"
+    @errorOnFetch="addErrorMessage($event.errorCode, $event.errorMsg)"
   />
 
-  <ErrorC
-    :error-code="currentErrorCode"
-    :error-message="currentErrorMessage"
-    @errorMessageClear="clearErrorMessage"
-  />
+  <div class="banner">
+    <ErrorC
+      v-for="error in errors"
+      :error-code="error.Code"
+      :error-message="error.Message"
+      @errorMessageClear="clearErrorMessage(error.Index)"
+    />
+  </div>
   <FooterC />
 </template>
 
-<style></style>
+<style>
+.banner {
+  background-color: rgba(189, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  color: white;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  text-align: center;
+  font-family: SFPro, sans-serif;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+</style>
