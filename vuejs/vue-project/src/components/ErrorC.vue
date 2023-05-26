@@ -1,8 +1,9 @@
 <template>
   <div class="texts">
-    <span
-      ><b>ERROR (Code {{ errorCode }}): </b>{{ errorMessage }}</span
-    >
+    <span>
+      <b>ERROR (Code {{ errorCode }}): </b>
+      {{ errorMessage }}
+    </span>
     <button @click="clearMessage">
       <svg
         fill="#fff"
