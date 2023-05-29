@@ -45,3 +45,23 @@ h2 {
     font-family: SFPro, sans-serif!important;
     font-weight: 100;
 }
+
+.default-button {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--color-background);
+    border: 1px solid var(--accent-c-pink-full-visibility);
+    box-shadow: 0 0 15px var(--accent-c-pink-low-visibility);
+    color: var(--color-text);
+    text-transform: uppercase;
+    font-family: SFPro, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: padding 400ms;
+}
+
+.default-button:hover {
+    padding: 15px;
+    transition: padding 400ms;
+}

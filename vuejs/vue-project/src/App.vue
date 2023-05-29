@@ -7,12 +7,12 @@ import ItemCard from "@/components/ItemCard.vue";
 import ParallaxC from "@/components/Parallax/ParallaxC.vue";
 import WeatherC from "@/components/WeatherC.vue";
 
-import NotFound from "./components/pages/404R.vue";
-import Default from "./components/pages/DefaultR.vue";
-import Weather from "./components/pages/WeatherR.vue";
-import Wiki from "./components/pages/WikiR.vue";
-import Stocks from "./components/pages/StocksR.vue";
-import Contact from "./components/pages/ContactR.vue";
+import NotFound from "./components/RouterPages/404R.vue";
+import Default from "./components/RouterPages/DefaultR.vue";
+import Weather from "./components/RouterPages/WeatherR.vue";
+import Wiki from "./components/RouterPages/WikiR.vue";
+import Stocks from "./components/RouterPages/StocksR.vue";
+import Contact from "./components/RouterPages/ContactR.vue";
 
 import FooterC from "@/components/FooterC.vue";
 import ErrorC from "@/components/ErrorC.vue";
@@ -108,15 +108,17 @@ export default {
 
 <template>
   <NavigationBar :navigation-options="routes" />
-  <HeaderC
-    :presentedText="currentView.HeaderTitle"
-    :height="currentView.HeaderHeight"
-  />
+  <div class="app-content">
+    <HeaderC
+      :presentedText="currentView.HeaderTitle"
+      :height="currentView.HeaderHeight"
+    />
 
-  <component
-    :is="currentView.Component"
-    @errorOnFetch="addErrorMessage($event.errorCode, $event.errorMsg)"
-  />
+    <component
+      :is="currentView.Component"
+      @errorOnFetch="addErrorMessage($event.errorCode, $event.errorMsg)"
+    />
+  </div>
 
   <div class="banner">
     <ErrorC
@@ -143,5 +145,9 @@ export default {
   font-family: SFPro, sans-serif;
   text-transform: uppercase;
   overflow: hidden;
+}
+
+.app-content {
+  min-height: 100vh;
 }
 </style>

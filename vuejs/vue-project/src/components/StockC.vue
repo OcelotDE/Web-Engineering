@@ -21,6 +21,7 @@ import { nextTick } from "vue";
 export default {
   name: "StockC",
   props: ["symbol", "type"],
+  emits: ["errorOnFetch"],
   components: {
     LineChart,
     BarChart,
@@ -46,12 +47,20 @@ export default {
     addStock: async function () {
       this.openDataSet = [];
       this.labelsSet = [];
-      const response = await fetch(
-        "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=" +
-          this.symbol +
-          "&apikey=" +
-          import.meta.env.VITE_ALPHAVANTAGE_KEY
-      );
+      let response;
+      try {
+        response = await fetch(
+          "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=" +
+            this.symbol +
+            "&apikey=" +
+            import.meta.env.VITE_ALPHAVANTAGE_KEY
+        );
+      } catch (e) {
+        let errorCode = "400";
+        let errorMsg =
+          "Error fetching stock data, please ensure a stable internet connection.";
+        this.$emit("errorOnFetch", { errorCode, errorMsg });
+      }
       const json = await response.json();
 
       const monthly = json["Monthly Time Series"];
@@ -62,8 +71,8 @@ export default {
           this.labelsSet.push(item);
         }
       }
-      console.log(this.openDataSet);
-      console.log(this.labelsSet);
+      this.openDataSet = this.openDataSet.reverse(); // reverse because the data is sent backwards ._.
+      this.labelsSet = this.labelsSet.reverse(); // reverse because the data is sent backwards ._.
 
       this.render = false;
 

@@ -1,15 +1,15 @@
 <template>
   <div class="backgroundContainer">
-    <img :src="productImagePath" alt="">
+    <img :src="productImagePath" alt="" />
     <div class="content">
       <h1>{{ productName }}</h1>
-      <hr>
+      <hr />
       <p>Features</p>
       <ul v-for="feature in features">
         <li>{{ feature }}</li>
       </ul>
     </div>
-    <slot/>
+    <slot />
     <button>Add to cart</button>
     <h2>{{ price }} €</h2>
   </div>
@@ -23,13 +23,12 @@ export default {
     description: String,
     productImagePath: String,
     price: Number,
-    features: Array
-  }
-}
+    features: Array,
+  },
+};
 </script>
 
 <style scoped>
-
 h1 {
   color: var(--accent-c-pink-full-visibility);
   padding: 0 5px;
@@ -74,33 +73,16 @@ img {
 }
 
 button {
-  padding: 10px;
-  border-radius: 10px;
-  background-color: var(--color-background);
-  border: 1px solid var(--accent-c-pink-full-visibility);
-  box-shadow: 0 0 15px var(--accent-c-pink-low-visibility);
-  color: var(--color-text);
-  text-transform: uppercase;
-  font-family: SFPro, sans-serif;
-  font-weight: bold;
-  cursor: pointer;
-  position: absolute;
   bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
-  margin-bottom: 30px;
-  transition: padding 400ms;
-}
-
-button:hover {
-  padding: 15px;
-  transition: padding 400ms;
+  position: absolute;
 }
 
 hr {
   margin: 3% 30%;
   border: 0;
-  border-top: 1px solid var(--vt-c-divider-dark-1)
+  border-top: 1px solid var(--vt-c-divider-dark-1);
 }
 
 ul {
