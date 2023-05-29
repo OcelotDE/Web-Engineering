@@ -1,30 +1,27 @@
 <template>
-  <div class="barsDiv">
-    <div class="item">
-      <StockC symbol="GOOGL" type="bar"></StockC>
-    </div>
-    <div class="item">
-      <StockC symbol="AMZN" type="bar"></StockC>
-    </div>
-  </div>
-
-  <div class="barsDiv">
-    <div class="item">
-      <StockC symbol="DAX" type="line"></StockC>
-    </div>
-  </div>
+  <BarChart
+    v-if="render && type === 'bar'"
+    :values-set="openDataSet"
+    :labels-set="labelsSet"
+    :title="symbol"
+  />
+  <LineChart
+    v-if="render && type === 'line'"
+    :values-set="openDataSet"
+    :labels-set="labelsSet"
+    :title="symbol"
+  />
 </template>
 
 <script>
-import BarChart from "@/components/BarChart.vue";
 import LineChart from "@/components/LineChart.vue";
+import BarChart from "@/components/BarChart.vue";
 import { nextTick } from "vue";
-import StockC from "@/components/StockC.vue";
 
 export default {
-  name: "StocksR",
+  name: "StockC",
+  props: ["symbol", "type"],
   components: {
-    StockC,
     LineChart,
     BarChart,
   },
@@ -50,7 +47,9 @@ export default {
       this.openDataSet = [];
       this.labelsSet = [];
       const response = await fetch(
-        "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=GOOGL&apikey=" +
+        "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=" +
+          this.symbol +
+          "&apikey=" +
           import.meta.env.VITE_ALPHAVANTAGE_KEY
       );
       const json = await response.json();
@@ -73,21 +72,13 @@ export default {
       this.render = true;
     },
   },
+
+  watch: {
+    symbol: function () {
+      this.addStock();
+    },
+  },
 };
 </script>
 
-<style scoped>
-.barsDiv {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  width: 100%;
-}
-
-.item {
-  flex: 1 1 0;
-  margin: 10px;
-  border-radius: var(--border-radius);
-  background-color: var(--color-background-mute);
-}
-</style>
+<style scoped></style>
