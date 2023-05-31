@@ -57,11 +57,12 @@ h2 {
     font-family: SFPro, sans-serif;
     font-weight: bold;
     cursor: pointer;
-    margin-bottom: 30px;
-    transition: padding 400ms;
+    margin: 10px;
+    transition: padding 400ms, margin 400ms;
 }
 
 .default-button:hover {
     padding: 15px;
-    transition: padding 400ms;
+    margin: 5px;
+    transition: padding 400ms, margin 400ms;
 }

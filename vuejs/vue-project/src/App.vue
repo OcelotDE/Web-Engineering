@@ -1,9 +1,9 @@
 <script>
 import ItemSection from "@/components/ItemSection.vue";
-import HeaderC from "@/components/HeaderC.vue";
+import HeaderC from "@/components/Main/HeaderC.vue";
 import VectorImageFill from "@/components/VectorImageFill.vue";
-import NavigationBar from "@/components/NavigationBar.vue";
-import ItemCard from "@/components/ItemCard.vue";
+import NavigationBar from "@/components/Main/NavigationBar.vue";
+import ItemCard from "@/components/Cards/ItemCard.vue";
 import ParallaxC from "@/components/Parallax/ParallaxC.vue";
 import WeatherC from "@/components/WeatherC.vue";
 
@@ -14,8 +14,8 @@ import Wiki from "./components/RouterPages/WikiR.vue";
 import Stocks from "./components/RouterPages/StocksR.vue";
 import Contact from "./components/RouterPages/ContactR.vue";
 
-import FooterC from "@/components/FooterC.vue";
-import ErrorC from "@/components/ErrorC.vue";
+import FooterC from "@/components/Main/FooterC.vue";
+import ErrorC from "@/components/Main/ErrorC.vue";
 import { shallowRef } from "vue";
 
 export default {
@@ -54,7 +54,7 @@ export default {
         "/stocks": {
           Component: shallowRef(Stocks),
           HeaderHeight: "30vh",
-          HeaderTitle: "STOCKS VIEWER",
+          HeaderTitle: "STOCKS",
           NavTitle: "Stocks",
           NavRoute: "stocks",
         },
@@ -77,7 +77,13 @@ export default {
   },
   computed: {
     currentView() {
-      const NotFoundComponent = { component: NotFound, height: "0", title: "" };
+      const NotFoundComponent = {
+        Component: NotFound,
+        HeaderHeight: "0",
+        HeaderTitle: "",
+        NavTitle: "err",
+        NavRoute: "err",
+      };
       return this.routes[this.currentPath.slice(1) || "/"] || NotFoundComponent;
     },
   },

@@ -1,26 +1,24 @@
 <template>
-    <section>
-        <ItemCard>
-            <slot/>
-        </ItemCard>
-    </section>
+  <section>
+    <ItemCard>
+      <slot />
+    </ItemCard>
+  </section>
 </template>
 
 <script>
-import ItemCard from "@/components/ItemCard.vue";
+import ItemCard from "@/components/Cards/ItemCard.vue";
 export default {
-    name: "ItemSection",
-    props: ['isEven'],
-    components: {ItemCard},
-
-}
+  name: "ItemSection",
+  props: ["isEven"],
+  components: { ItemCard },
+};
 </script>
-
 
 <style scoped>
 section {
-    height: 50vh;
-    width: 100%;
-    background-color: var(--color-background-soft);
+  height: 50vh;
+  width: 100%;
+  background-color: var(--color-background-soft);
 }
 </style>

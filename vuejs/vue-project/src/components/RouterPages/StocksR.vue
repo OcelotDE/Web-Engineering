@@ -7,12 +7,10 @@
     />
   </div>
   <div class="content">
-    <button class="default-button" @click="useBarChart = !useBarChart">
-      Change display type
-    </button>
     <div class="barsDiv">
       <div class="item">
         <StockC
+          v-if="render"
           :symbol="currentSymbol"
           :type="chartType"
           @error-on-fetch="errorPass($event)"
@@ -20,6 +18,9 @@
       </div>
     </div>
     <div class="item">
+      <button class="default-button" @click="useBarChart = !useBarChart">
+        Change chart display type
+      </button>
       <p v-if="render" v-for="infoTitles in Object.keys(infos)">
         <b>{{ infoTitles }}</b
         >: {{ infos[infoTitles] }}
@@ -29,8 +30,8 @@
 </template>
 
 <script>
-import BarChart from "@/components/BarChart.vue";
-import LineChart from "@/components/LineChart.vue";
+import BarChart from "@/components/Charts/BarChart.vue";
+import LineChart from "@/components/Charts/LineChart.vue";
 import { nextTick } from "vue";
 import StockC from "@/components/StockC.vue";
 import SearchBar from "@/components/wikiSearch/SearchBar.vue";
@@ -52,10 +53,17 @@ export default {
       currentSymbol: "GOOGL",
       tempInputSymbol: "GOOGL",
       infos: [],
+      resizeTimer: 0,
+      semaphore: 0,
+      resizeInProgress: false,
     };
   },
   mounted() {
     this.addStockInfo();
+
+    addEventListener("resize", (event) => {
+      this.adjustStockChartSize();
+    });
   },
   setup() {
     const openDataSet = [];
@@ -76,6 +84,33 @@ export default {
     },
   },
   methods: {
+    adjustStockChartSize: async function () {
+      if (this.resizeTimer > 0) {
+        this.resizeTimer = 0;
+      } else {
+        this.resizeInProgress = true;
+        while (this.resizeTimer < 100) {
+          await this.sleep(100);
+          if (!this.resizeInProgress) return; // if resize already done earlier, abort request
+          this.resizeTimer++;
+        }
+        this.resizeTimer = 0;
+        this.resizeInProgress = false;
+        if (this.semaphore > 0) return; // check semaphore to prevent multiple resets
+        this.semaphore++;
+
+        this.render = false;
+
+        await nextTick();
+
+        this.render = true;
+
+        this.semaphore--;
+      }
+    },
+    sleep: function (milliseconds) {
+      return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    },
     errorPass: function (event) {
       this.$emit("errorOnFetch", event);
     },
@@ -118,9 +153,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  width: 50%;
+  /*width: 50%;
   transform: translateX(-50%);
-  left: 50%;
+  left: 50%;*/
 }
 
 .item {
@@ -129,11 +164,6 @@ export default {
   padding: 10px;
   border-radius: var(--border-radius);
   background-color: var(--color-background-mute);
-}
-
-button {
-  transform: translateX(-50%);
-  left: 50%;
 }
 
 .content {

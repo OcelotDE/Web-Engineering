@@ -77,8 +77,4 @@ button {
   transform: translate(-100%, -50%);
   box-shadow: none;
 }
-
-button:hover {
-  padding: 10px;
-}
 </style>

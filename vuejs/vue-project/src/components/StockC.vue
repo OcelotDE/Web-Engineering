@@ -1,21 +1,23 @@
 <template>
-  <BarChart
-    v-if="render && type === 'bar'"
-    :values-set="openDataSet"
-    :labels-set="labelsSet"
-    :title="symbol"
-  />
-  <LineChart
-    v-if="render && type === 'line'"
-    :values-set="openDataSet"
-    :labels-set="labelsSet"
-    :title="symbol"
-  />
+  <div class="chart">
+    <BarChart
+      v-if="render && type === 'bar'"
+      :values-set="openDataSet"
+      :labels-set="labelsSet"
+      :title="symbol"
+    />
+    <LineChart
+      v-if="render && type === 'line'"
+      :values-set="openDataSet"
+      :labels-set="labelsSet"
+      :title="symbol"
+    />
+  </div>
 </template>
 
 <script>
-import LineChart from "@/components/LineChart.vue";
-import BarChart from "@/components/BarChart.vue";
+import LineChart from "@/components/Charts/LineChart.vue";
+import BarChart from "@/components/Charts/BarChart.vue";
 import { nextTick } from "vue";
 
 export default {
@@ -90,4 +92,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.chart {
+  width: 100%;
+  height: 100%;
+}
+</style>

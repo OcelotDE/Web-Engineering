@@ -21,13 +21,13 @@
 
 <script>
 import ItemSection from "@/components/ItemSection.vue";
-import HeaderC from "@/components/HeaderC.vue";
+import HeaderC from "@/components/Main/HeaderC.vue";
 import VectorImageFill from "@/components/VectorImageFill.vue";
-import NavigationBar from "@/components/NavigationBar.vue";
-import ItemCard from "@/components/ItemCard.vue";
+import NavigationBar from "@/components/Main/NavigationBar.vue";
+import ItemCard from "@/components/Cards/ItemCard.vue";
 import ParallaxC from "@/components/Parallax/ParallaxC.vue";
 import WeatherC from "@/components/WeatherC.vue";
-import ProductCard from "@/components/Commerce/ProductCard.vue";
+import ProductCard from "@/components/Cards/ProductCard.vue";
 
 export default {
   components: {

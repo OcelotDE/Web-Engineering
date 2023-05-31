@@ -3,7 +3,7 @@ import SearchBar from "@/components/wikiSearch/SearchBar.vue";
 import { ref } from "vue";
 import PropositionsBox from "@/components/wikiSearch/PropositionsBox.vue";
 import ItemsContainer from "@/components/wikiSearch/ItemsContainer.vue";
-import HeaderC from "@/components/HeaderC.vue";
+import HeaderC from "@/components/Main/HeaderC.vue";
 
 export default {
   components: { HeaderC, ItemsContainer, PropositionsBox, SearchBar },

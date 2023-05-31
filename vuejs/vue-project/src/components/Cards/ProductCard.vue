@@ -10,7 +10,7 @@
       </ul>
     </div>
     <slot />
-    <button>Add to cart</button>
+    <button class="default-button">Add to cart</button>
     <h2>{{ price }} €</h2>
   </div>
 </template>
@@ -77,6 +77,7 @@ button {
   left: 50%;
   transform: translateX(-50%);
   position: absolute;
+  margin: 0 0 30px 0 !important; /* MAKE IMPORTENT TO OVERWRITE DEFAULT BEHAVIOR */
 }
 
 hr {
