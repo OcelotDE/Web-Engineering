@@ -258,9 +258,8 @@ export default {
 }
 
 .inputField {
-  background: var(--color-background-mute);
-  border: 2px solid var(--accent-c-pink-full-visibility);
-  box-shadow: 0 0 15px var(--accent-c-pink-low-visibility);
+  border: none;
+  background: var(--color-background-soft);
   border-radius: var(--border-radius);
   padding: 10px;
   width: 100%;

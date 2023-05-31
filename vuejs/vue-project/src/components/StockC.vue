@@ -53,27 +53,29 @@ export default {
       this.labelsSet = [];
 
       try {
-        // Use finnhub as api, since it has a way higher limit of calls than alphavantage
-        const api_key = ApiClient.instance.authentications["api_key"];
-        api_key.apiKey = import.meta.env.VITE_FINNHUB_KEY;
-        const finnhubClient = new DefaultApi();
-
-        finnhubClient.stockCandles(
-          this.symbol,
-          this.resolution,
-          0,
-          Math.floor(Date.now() / 1000),
-          (error, data, response) => {
-            for (let item in data.t) {
-              this.labelsSet.push(
-                new Date(data.t[item] * 1000).toLocaleDateString("us-US")
-              );
-            }
-            this.openDataSet = data.c;
-
-            this.refresh();
-          }
+        let response = await fetch(
+          "https://finnhub.io/api/v1/stock/candle?" +
+            "symbol=" +
+            this.symbol +
+            "&resolution=" +
+            this.resolution +
+            "&from=0" +
+            "&to=" +
+            Math.floor(Date.now() / 1000) +
+            "&token=" +
+            import.meta.env.VITE_FINNHUB_KEY
         );
+
+        response = await response.json();
+
+        for (let item in response.t) {
+          this.labelsSet.push(
+            new Date(response.t[item] * 1000).toLocaleDateString("de-DE")
+          );
+        }
+        this.openDataSet = response.c;
+
+        await this.refresh();
       } catch (e) {
         let errorCode = "400";
         let errorMsg =

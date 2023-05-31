@@ -3,15 +3,17 @@
     <div class="navSpacing" ref="spacer"></div>
     <nav ref="navBar">
       <div id="logo"></div>
-      <p v-if="loginValid">Welcome back, {{ userName }}.</p>
+      <p v-if="loginValid && !showMobileNav" id="loginText">
+        Welcome back, {{ userName }}.
+      </p>
       <div id="items">
         <ul :class="{ mobileHide: showMobileNav }" ref="navList">
           <li v-if="!loginValid">
-            <img src="" alt="login icon" />
+            <img src="src/assets/lock.svg" alt="login icon" class="lockicon" />
             <a @click="this.$emit('openLoginDialogRequested')">Login</a>
           </li>
           <li v-if="loginValid">
-            <img src="" alt="logout icon" />
+            <img src="src/assets/lock.svg" alt="logout icon" class="lockicon" />
             <a @click="this.$emit('logoutRequested')">Logout</a>
           </li>
           <li v-for="option in navigationOptions">
@@ -23,7 +25,7 @@
         id="toggleMobileNav"
         @click="
           showMobileNav = !showMobileNav;
-          updateSpacerSize;
+          updateSpacerSize();
         "
       >
         <svg
@@ -112,8 +114,8 @@ button {
   height: 2rem;
   width: 2rem;
   background-color: #fff;
-  -webkit-mask: url(../assets/logo.svg) no-repeat center;
-  mask: url(../assets/logo.svg) no-repeat center;
+  -webkit-mask: url(src/assets/logo.svg) no-repeat center;
+  mask: url(src/assets/logo.svg) no-repeat center;
 }
 
 .navSpacing {
@@ -489,5 +491,19 @@ nav ul li a:hover {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.lockicon {
+  height: 1.2rem;
+  width: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-right: 5px;
+}
+
+#loginText {
+  font-size: 0.7rem;
+  position: absolute;
+  left: 100px;
 }
 </style>
