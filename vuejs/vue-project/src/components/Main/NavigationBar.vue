@@ -3,14 +3,20 @@
     <div class="navSpacing" ref="spacer"></div>
     <nav ref="navBar">
       <div id="logo"></div>
+      <p v-if="loginValid">Welcome back, {{ userName }}.</p>
       <div id="items">
         <ul :class="{ mobileHide: showMobileNav }" ref="navList">
+          <li v-if="!loginValid">
+            <img src="" alt="login icon" />
+            <a @click="this.$emit('openLoginDialogRequested')">Login</a>
+          </li>
+          <li v-if="loginValid">
+            <img src="" alt="logout icon" />
+            <a @click="this.$emit('logoutRequested')">Logout</a>
+          </li>
           <li v-for="option in navigationOptions">
             <a :href="'#/' + option.NavRoute">{{ option.NavTitle }}</a>
           </li>
-          <!--<li><a href="#/">Home</a></li>
-            <li><a href="#/weather">Weather</a></li>
-            <li><a href="#/wiki">WikiSearch</a></li>-->
         </ul>
       </div>
       <span
@@ -43,12 +49,15 @@
 
 <script>
 import { ref } from "vue";
+import VueCookie from "vue-cookie";
 
 export default {
   name: "NavigationBar",
   props: {
     navigationOptions: Object,
+    loginValid: Boolean,
   },
+  emits: ["openLoginDialogRequested", "logoutRequested"],
   setup() {
     const mobileView = ref(false);
     const showMobileNav = ref(false);
@@ -58,7 +67,15 @@ export default {
       showMobileNav,
     };
   },
+  data() {
+    return {
+      userName: VueCookie.get("username"),
+    };
+  },
   methods: {
+    updateUsername() {
+      this.userName = VueCookie.get("username");
+    },
     updateValues() {
       if (window.innerWidth < 800 && !this.mobileView) {
         this.mobileView = true;
@@ -75,6 +92,11 @@ export default {
     this.updateSpacerSize();
     window.addEventListener("resize", this.updateValues, false);
     console.log(this.navigationOptions);
+  },
+  watch: {
+    loginValid: function () {
+      this.updateUsername();
+    },
   },
 };
 </script>
@@ -129,6 +151,11 @@ nav ul li {
 nav ul li {
   padding: 5px 20px;
   text-align: center;
+}
+
+li:first-of-type > a {
+  font-weight: 300;
+  cursor: pointer;
 }
 
 nav ul li a {

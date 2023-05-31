@@ -13,6 +13,7 @@
           v-if="render"
           :symbol="currentSymbol"
           :type="chartType"
+          :resolution="resolution"
           @error-on-fetch="errorPass($event)"
         ></StockC>
       </div>
@@ -20,6 +21,9 @@
     <div class="item">
       <button class="default-button" @click="useBarChart = !useBarChart">
         Change chart display type
+      </button>
+      <button class="default-button" @click="changeResolution()">
+        Change resolution from "{{ resolution }}"
       </button>
       <p v-if="render" v-for="infoTitles in Object.keys(infos)">
         <b>{{ infoTitles }}</b
@@ -56,6 +60,7 @@ export default {
       resizeTimer: 0,
       semaphore: 0,
       resizeInProgress: false,
+      resolution: "M",
     };
   },
   mounted() {
@@ -143,6 +148,19 @@ export default {
       await nextTick();
 
       this.render = true;
+    },
+    changeResolution: function () {
+      switch (this.resolution) {
+        case "M":
+          this.resolution = "D";
+          break;
+        case "D":
+          this.resolution = "W";
+          break;
+        case "W":
+          this.resolution = "M";
+          break;
+      }
     },
   },
 };

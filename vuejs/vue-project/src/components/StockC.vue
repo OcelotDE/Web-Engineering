@@ -20,9 +20,11 @@ import LineChart from "@/components/Charts/LineChart.vue";
 import BarChart from "@/components/Charts/BarChart.vue";
 import { nextTick } from "vue";
 
+import { ApiClient, DefaultApi } from "finnhub";
+
 export default {
   name: "StockC",
-  props: ["symbol", "type"],
+  props: ["symbol", "type", "resolution"],
   emits: ["errorOnFetch"],
   components: {
     LineChart,
@@ -49,13 +51,28 @@ export default {
     addStock: async function () {
       this.openDataSet = [];
       this.labelsSet = [];
-      let response;
+
       try {
-        response = await fetch(
-          "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=" +
-            this.symbol +
-            "&apikey=" +
-            import.meta.env.VITE_ALPHAVANTAGE_KEY
+        // Use finnhub as api, since it has a way higher limit of calls than alphavantage
+        const api_key = ApiClient.instance.authentications["api_key"];
+        api_key.apiKey = import.meta.env.VITE_FINNHUB_KEY;
+        const finnhubClient = new DefaultApi();
+
+        finnhubClient.stockCandles(
+          this.symbol,
+          this.resolution,
+          0,
+          Math.floor(Date.now() / 1000),
+          (error, data, response) => {
+            for (let item in data.t) {
+              this.labelsSet.push(
+                new Date(data.t[item] * 1000).toLocaleDateString("us-US")
+              );
+            }
+            this.openDataSet = data.c;
+
+            this.refresh();
+          }
         );
       } catch (e) {
         let errorCode = "400";
@@ -63,19 +80,8 @@ export default {
           "Error fetching stock data, please ensure a stable internet connection.";
         this.$emit("errorOnFetch", { errorCode, errorMsg });
       }
-      const json = await response.json();
-
-      const monthly = json["Monthly Time Series"];
-
-      for (let item in monthly) {
-        if (item) {
-          this.openDataSet.push(parseInt(monthly[item]["1. open"]));
-          this.labelsSet.push(item);
-        }
-      }
-      this.openDataSet = this.openDataSet.reverse(); // reverse because the data is sent backwards ._.
-      this.labelsSet = this.labelsSet.reverse(); // reverse because the data is sent backwards ._.
-
+    },
+    refresh: async function () {
       this.render = false;
 
       await nextTick();
@@ -86,6 +92,9 @@ export default {
 
   watch: {
     symbol: function () {
+      this.addStock();
+    },
+    resolution: function () {
       this.addStock();
     },
   },

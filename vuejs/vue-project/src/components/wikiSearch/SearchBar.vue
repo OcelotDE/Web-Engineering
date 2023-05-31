@@ -14,7 +14,6 @@
 <script>
 export default {
   name: "SearchBar",
-  components: {},
   props: ["currentSearchText"],
   data() {
     return {
