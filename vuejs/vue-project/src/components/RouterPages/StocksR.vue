@@ -37,7 +37,7 @@
 import BarChart from "@/components/Charts/BarChart.vue";
 import LineChart from "@/components/Charts/LineChart.vue";
 import { nextTick } from "vue";
-import StockC from "@/components/StockC.vue";
+import StockC from "@/components/Containers/StockC.vue";
 import SearchBar from "@/components/wikiSearch/SearchBar.vue";
 
 export default {

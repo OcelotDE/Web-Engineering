@@ -52,6 +52,8 @@ export default {
       this.openDataSet = [];
       this.labelsSet = [];
 
+      if (this.symbol === "") return;
+
       try {
         let response = await fetch(
           "https://finnhub.io/api/v1/stock/candle?" +

@@ -26,7 +26,7 @@ import VectorImageFill from "@/components/VectorImageFill.vue";
 import NavigationBar from "@/components/Main/NavigationBar.vue";
 import ItemCard from "@/components/Cards/ItemCard.vue";
 import ParallaxC from "@/components/Parallax/ParallaxC.vue";
-import WeatherC from "@/components/WeatherC.vue";
+import WeatherC from "@/components/Containers/WeatherC.vue";
 import ProductCard from "@/components/Cards/ProductCard.vue";
 
 export default {

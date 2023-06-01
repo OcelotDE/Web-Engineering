@@ -290,7 +290,7 @@ export default {
   width: 320px;
   height: 100px;
 
-  margin-left: 30px;
+  margin-left: 10px;
 }
 
 #sig-dataUrl {

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import WeatherC from "@/components/WeatherC.vue";
+import WeatherC from "@/components/Containers/WeatherC.vue";
 import SearchBar from "@/components/wikiSearch/SearchBar.vue";
 import { ref } from "vue";
 import PropositionsBox from "@/components/wikiSearch/PropositionsBox.vue";
