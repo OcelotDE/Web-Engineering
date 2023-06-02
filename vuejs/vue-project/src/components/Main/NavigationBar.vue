@@ -86,8 +86,15 @@ export default {
       }
       this.updateSpacerSize();
     },
-    updateSpacerSize() {
-      this.$refs.spacer.style.height = this.$refs.navBar.clientHeight + "px";
+    updateSpacerSize: async function () {
+      for (let i = 0; i < 20; i++) {
+        // loop 20 times and wait 20ms each to transition the height for mobile
+        await this.sleep(20);
+        this.$refs.spacer.style.height = this.$refs.navBar.clientHeight + "px";
+      }
+    },
+    sleep: function (milliseconds) {
+      return new Promise((resolve) => setTimeout(resolve, milliseconds));
     },
   },
   mounted() {

@@ -96,8 +96,6 @@ export default {
               import.meta.env.VITE_WEATHER_KEY
           );
 
-          console.log(response.status);
-
           const json = await response.json();
 
           if (json.batchcomplete !== "") {
@@ -114,7 +112,6 @@ export default {
               }
               names.push(addedPair);
             });
-            console.log(names);
             this.propositions = names;
           }
         } catch (e) {
