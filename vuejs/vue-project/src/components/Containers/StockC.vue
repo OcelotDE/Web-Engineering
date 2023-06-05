@@ -55,6 +55,7 @@ export default {
       if (this.symbol === "") return;
 
       try {
+        // fetch api request stock data for given symbol
         let response = await fetch(
           "https://finnhub.io/api/v1/stock/candle?" +
             "symbol=" +
@@ -68,24 +69,26 @@ export default {
             import.meta.env.VITE_FINNHUB_KEY
         );
 
-        response = await response.json();
+        response = await response.json(); // parse response to json
 
         for (let item in response.t) {
+          // iterate through timestamps
           this.labelsSet.push(
             new Date(response.t[item] * 1000).toLocaleDateString("de-DE")
-          );
+          ); // convert timestamps to dates
         }
-        this.openDataSet = response.c;
+        this.openDataSet = response.c; // update stock closing values
 
-        await this.refresh();
+        await this.refresh(); // rerender component
       } catch (e) {
         let errorCode = "400";
         let errorMsg =
           "Error fetching stock data, please ensure a stable internet connection.";
-        this.$emit("errorOnFetch", { errorCode, errorMsg });
+        this.$emit("errorOnFetch", { errorCode, errorMsg }); // if error while fetching, show user
       }
     },
     refresh: async function () {
+      // rerender component if change happened
       this.render = false;
 
       await nextTick();

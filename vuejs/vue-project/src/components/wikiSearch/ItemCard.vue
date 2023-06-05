@@ -37,6 +37,7 @@ export default {
       this.showDescription = !this.showDescription;
     },
     imageFetch: async function () {
+      // fetch image from api
       const response = await fetch(
         "https://de.wikipedia.org/w/api.php?action=query&formatversion=2&format=json&prop=pageimages%7Cpageterms&pithumbsize=1000&titles=" +
           this.title +
@@ -45,7 +46,7 @@ export default {
 
       const json = await response.json();
 
-      //this.$el.querySelector("img").src = json.query?.RouterPages[0]?.thumbnail?.source
+      // set image of card to wiki image
       this.$el.querySelector(
         "#itemThumbnail"
       ).style.backgroundImage = `URL(${json.query?.pages[0]?.thumbnail?.source})`;

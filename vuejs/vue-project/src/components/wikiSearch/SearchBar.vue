@@ -22,13 +22,11 @@ export default {
   },
   methods: {
     runSearch: function () {
-      console.log("search requested");
       this.$emit("searchRequested");
     },
   },
   watch: {
     searchBarText: function () {
-      console.log("changed");
       this.$emit("searchValueChanged", this.searchBarText);
     },
     currentSearchText: function () {

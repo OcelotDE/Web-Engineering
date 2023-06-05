@@ -80,17 +80,19 @@ export default {
     },
     updateValues() {
       if (window.innerWidth < 800 && !this.mobileView) {
+        // if formfactor seems mobile
         this.mobileView = true;
       } else if (window.innerWidth >= 800 && this.mobileView) {
+        // if formfactor seems desktop
         this.mobileView = false;
       }
-      this.updateSpacerSize();
+      this.updateSpacerSize(); // update size of the spacer behind the navbar
     },
     updateSpacerSize: async function () {
       for (let i = 0; i < 20; i++) {
         // loop 20 times and wait 20ms each to transition the height for mobile
         await this.sleep(20);
-        this.$refs.spacer.style.height = this.$refs.navBar.clientHeight + "px";
+        this.$refs.spacer.style.height = this.$refs.navBar.clientHeight + "px"; // update height value
       }
     },
     sleep: function (milliseconds) {

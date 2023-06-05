@@ -12,7 +12,10 @@
       @propositionSelected="changeSearchText($event)"
     ></PropositionsBox>
   </div>
-  <WeatherC ref="weatherC" />
+  <WeatherC
+    ref="weatherC"
+    @error-on-fetch="this.$emit('errorOnFetch', $event)"
+  />
 </template>
 
 <script>
@@ -44,9 +47,9 @@ export default {
   emits: ["errorOnFetch"],
   methods: {
     getDataFromSearch: async function () {
-      console.log("text:" + this.searchBarText);
       let response;
       try {
+        // fetch api request of requested location
         response = await fetch(
           "http://api.openweathermap.org/geo/1.0/direct?q=" +
             this.searchBarText +
@@ -57,11 +60,11 @@ export default {
         let errorCode = "400";
         let errorMsg =
           "Error fetching weather data, please ensure a stable internet connection.";
-        this.$emit("errorOnFetch", { errorCode, errorMsg });
+        this.$emit("errorOnFetch", { errorCode, errorMsg }); // emit error if connection issue
         return;
       }
       let data = await response.json();
-      console.log(data[0]);
+
       if (!data) return;
       let position = {
         coords: {
@@ -69,16 +72,17 @@ export default {
           longitude: data[0]?.lon,
         },
       };
-      await this.$refs.weatherC.getData(position);
+      await this.$refs.weatherC.getData(position); // get weather data for given location
     },
     changeSearchText: function (newText) {
       this.searchBarText = newText;
 
-      this.getPropositions(newText);
+      this.getPropositions(newText); // get propositions for current location string
     },
     getPropositions: async function (searchBarValue) {
       if (searchBarValue === "") return;
 
+      // decide whether to update propositionstimer or to create a new if not existent yet
       if (this.propositionsTimer > 0) {
         this.propositionsTimer = 0;
       } else {
@@ -89,6 +93,7 @@ export default {
         this.propositionsTimer = 0;
 
         try {
+          // fetch possible propositions from api
           const response = await fetch(
             "http://api.openweathermap.org/geo/1.0/direct?q=" +
               searchBarValue +
@@ -106,16 +111,19 @@ export default {
                 data.hasOwnProperty("local_names") &&
                 data["local_names"].hasOwnProperty("de")
               ) {
-                addedPair = { title: data["local_names"]["de"] };
+                addedPair = { title: data["local_names"]["de"] }; // add german name of city if available
               } else {
-                addedPair = { title: data["name"] };
+                addedPair = { title: data["name"] }; // add general name if german name not available
               }
-              names.push(addedPair);
+              names.push(addedPair); // push name to names
             });
-            this.propositions = names;
+            this.propositions = names; // update propositions array
           }
         } catch (e) {
-          console.log(e);
+          let errorCode = "400";
+          let errorMsg =
+            "Error fetching weather data, please ensure a stable internet connection.";
+          this.$emit("errorOnFetch", { errorCode, errorMsg }); // emit error if connection issue
         }
       }
     },

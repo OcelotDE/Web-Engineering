@@ -29,10 +29,10 @@
 
 <script>
 import { ref } from "vue";
-import { func } from "three/nodes";
 
 export default {
   name: "WeatherC",
+  emits: ["errorOnFetch"],
   setup() {
     const degreeNow = ref(0);
     const weatherNow = ref(null);
@@ -65,7 +65,9 @@ export default {
     },
     getWeekDay: function (dateString) {
       let dayNmbr = new Date(dateString).getUTCDay();
-      switch (dayNmbr) {
+      switch (
+        dayNmbr // Check what weekday it is
+      ) {
         case 0:
           return "Sunday";
         case 1:
@@ -85,28 +87,50 @@ export default {
       }
     },
     getData: async function (position) {
-      let response = await fetch(
-        "http://api.openweathermap.org/data/2.5/forecast?lat=" +
-          position.coords.latitude +
-          "&lon=" +
-          position.coords.longitude +
-          "&appid=" +
-          import.meta.env.VITE_WEATHER_KEY +
-          "&mode=JSON&units=metric"
-      );
-      let data = await response.json();
+      // fetch data from api to process using parameters
+      let response;
+
+      try {
+        response = await fetch(
+          "http://api.openweathermap.org/data/2.5/forecast?lat=" +
+            position.coords.latitude +
+            "&lon=" +
+            position.coords.longitude +
+            "&appid=" +
+            import.meta.env.VITE_WEATHER_KEY +
+            "&mode=JSON&units=metric"
+        );
+
+        if (response.status === 400) {
+          let errorCode = "400";
+          let errorMsg =
+            "Error fetching location, please check for correct spelling.";
+          this.$emit("errorOnFetch", { errorCode, errorMsg }); // emit error if connection issue
+          return;
+        }
+      } catch (e) {
+        let errorCode = "400";
+        let errorMsg =
+          "Error fetching location, please check your internet connection.";
+        this.$emit("errorOnFetch", { errorCode, errorMsg }); // emit error if connection issue
+        return;
+      }
+      let data = await response.json(); // parse to json
+
+      // assign variables if valid
       this.weatherData = data?.list;
       this.degreeNow = data?.list[0]?.main?.temp;
       this.weatherNow = data?.list[0]?.weather[0]?.main;
       this.$refs.weatherImage.src =
         "https://openweathermap.org/img/wn/" +
         data?.list[0]?.weather[0]?.icon +
-        "@4x.png";
-      this.setCanvasWeather(data?.list[0]?.weather[0]?.main);
+        "@4x.png"; // set weather image
+      this.setCanvasWeather(data?.list[0]?.weather[0]?.main); // set canvas ui effect
     },
     setCanvasWeather: function (weatherString) {
-      console.log(weatherString);
-      switch (weatherString) {
+      switch (
+        weatherString // check if weather has ui effect
+      ) {
         case "Rain":
           this.setRain();
           break;
@@ -121,10 +145,9 @@ export default {
     clearCanvas: function () {
       clearInterval(this.canvasTimeoutId);
       const canvas = document.querySelector("canvas");
-      canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+      canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height); // clear canvas
     },
     setSun: function () {
-      console.log("sun");
       var canvas = document.querySelector("canvas");
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -138,6 +161,7 @@ export default {
         ctx.lineWidth = 1;
         ctx.lineCap = "round";
 
+        // add circle
         ctx.beginPath();
         ctx.arc(0, 0, 300, 0, 2 * Math.PI);
         ctx.fill();
@@ -146,6 +170,7 @@ export default {
         ctx.strokeStyle = "rgba(255,166,0,0.61)";
         ctx.lineWidth = 100;
 
+        // add sun ray lines
         ctx.beginPath();
         ctx.moveTo(0, 0);
         ctx.lineTo(7000, 10000);
@@ -173,6 +198,7 @@ export default {
       canvas.height = window.innerHeight;
 
       if (canvas.getContext) {
+        // calculate random positions for rain drops and render them falling down on the page
         var ctx = canvas.getContext("2d");
         var w = canvas.width;
         var h = canvas.height;

@@ -100,48 +100,46 @@ export default {
   },
   methods: {
     login: function () {
-      console.log("logging in...");
       if (this.userInput === import.meta.env.VITE_ADMINPASSWORD) {
-        VueCookie.set("loginValid", true);
+        // check if password is correct
+        VueCookie.set("loginValid", true); // set cookie to valid
         this.loginValid = true;
-        VueCookie.set("username", this.userName);
-        console.log("correct");
+        VueCookie.set("username", this.userName); // set username cookie
       } else {
-        console.log("wrong password");
         this.addErrorMessage(
           "WRONGPASS",
           "You have entered the wrong password. (Incorrect input: " +
             this.userInput +
             ")"
-        );
+        ); // send errormessage to user for wrong password
       }
-      this.$refs.loginDialog.close();
+      this.$refs.loginDialog.close(); // close ui dialog
     },
     cancelLogin: function () {
-      this.$refs.loginDialog.close();
+      this.$refs.loginDialog.close(); // close ui dialog
     },
     openLogin: function () {
-      this.$refs.loginDialog.showModal();
+      this.$refs.loginDialog.showModal(); // close ui dialog
     },
     logout: function () {
-      VueCookie.delete("username");
-      VueCookie.delete("loginValid");
+      VueCookie.delete("username"); // clear username cookie
+      VueCookie.delete("loginValid"); // clear validity cookie
       this.loginValid = false;
     },
     shallowRef,
     clearErrorMessage: function (toRemoveIndex) {
-      this.errors.splice(toRemoveIndex, 1);
-      this.updateErrorIndices();
+      this.errors.splice(toRemoveIndex, 1); // clear errormessage using index
+      this.updateErrorIndices(); // update indices of other messages
     },
     updateErrorIndices: function () {
       let index = 0;
       this.errors.forEach((error) => {
         error.Index = index;
         index++;
-      });
+      }); // loop through errors and update index field
     },
     addErrorMessage: function (code, msg) {
-      this.errors.push({ Code: code, Message: msg, Index: this.errors.length });
+      this.errors.push({ Code: code, Message: msg, Index: this.errors.length }); // add error message to array
     },
   },
 };

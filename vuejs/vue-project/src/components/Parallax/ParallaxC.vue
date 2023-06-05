@@ -115,9 +115,6 @@ export default {
         this.setCameraToDroneBattery();
       }
     },
-    isDarkThemeActive: function (isActive) {
-      console.log(isActive);
-    },
   },
 
   mounted: function () {

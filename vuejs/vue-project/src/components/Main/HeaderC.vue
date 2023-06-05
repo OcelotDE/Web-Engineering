@@ -41,6 +41,7 @@ export default {
   },
 
   mounted: function () {
+    // set header parameters
     document.addEventListener("mousemove", this.mouseMove, false);
     this.headerText = this.presentedText;
     this.updateHeight();
@@ -56,6 +57,7 @@ export default {
 
   watch: {
     headerTextIsVisible: function (newState) {
+      // animate header if it appears on screen
       if (newState && !this.headerRendered) {
         this.headerRendered = true;
         this.shuffleHeaderText();
@@ -71,7 +73,7 @@ export default {
   expose: ["caesarCipher", "shuffleHeaderText"],
   methods: {
     caesarCipher: function (str, num) {
-      // you can comment this line
+      // run cipher algorithm shuffle header text for animation
       str = str.toUpperCase();
 
       var result = "";
@@ -84,6 +86,7 @@ export default {
       return result;
     },
     shuffleHeaderText: function () {
+      // shuffle letters for animation
       this.shuffleAmount++;
       this.headerText = this.caesarCipher(this.headerText, 1);
       setTimeout(() => {
@@ -112,6 +115,7 @@ export default {
       )[1].style.transform = `translate(${x_bg}px, ${y_bg - 200}px)`;
     },
     updateHeight() {
+      // update header height if needed
       if (this.height) {
         document.querySelector("header").style.height = this.height;
       }

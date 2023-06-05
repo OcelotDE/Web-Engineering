@@ -37,6 +37,7 @@ export default {
   },
   methods: {
     clearMessage: function () {
+      // emit the clear event to main component
       this.$emit("errorMessageClear");
     },
   },

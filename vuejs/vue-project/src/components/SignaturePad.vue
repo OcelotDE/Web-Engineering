@@ -67,6 +67,7 @@ export default {
   },
   methods: {
     renderSignaturePad: function () {
+      // render drawing
       window.requestAnimFrame = (function (callback) {
         return (
           window.requestAnimationFrame ||
@@ -82,6 +83,7 @@ export default {
 
       let canvas = this.$refs.canvas;
 
+      // set canvas settings
       let ctx = canvas.getContext("2d");
       ctx.strokeStyle = "#222222";
       ctx.lineWidth = 4;
@@ -223,13 +225,9 @@ export default {
       }
 
       // Set up the UI
-      //var sigText = document.getElementById("sig-dataUrl");
       let sigText = this.$refs.dataUrl;
-      //var sigImage = document.getElementById("sig-image");
       let sigImage = this.$refs.image;
-      //var clearBtn = document.getElementById("sig-clearBtn");
       let clearBtn = this.$refs.clearBtn;
-      //var submitBtn = document.getElementById("sig-submitBtn");
       let submitBtn = this.$refs.submitBtn;
       clearBtn.addEventListener(
         "click",
