@@ -4,6 +4,7 @@ import { ref } from "vue";
 import PropositionsBox from "@/components/wikiSearch/PropositionsBox.vue";
 import ItemsContainer from "@/components/wikiSearch/ItemsContainer.vue";
 import HeaderC from "@/components/Main/HeaderC.vue";
+import VueCookie from "vue-cookie";
 
 export default {
   components: { HeaderC, ItemsContainer, PropositionsBox, SearchBar },
@@ -27,11 +28,14 @@ export default {
   },
 
   methods: {
-    runSearch: function () {
-      this.fetchWikipedia();
-    },
-
     fetchWikipedia: async function () {
+      if (!VueCookie.get("loginValid")) {
+        let errorCode = "NOPERM";
+        let errorMsg =
+          "Operation aborted: You don't have enough permissions to perform this action.";
+        this.$emit("errorOnFetch", { errorCode, errorMsg }); // emit error if connection issue
+        return;
+      }
       // fetch wiki entries
       const response = await fetch(
         "https://de.wikipedia.org/w/api.php?action=query&generator=prefixsearch&format=json&gpslimit=4&prop=extracts%7Cdescription&exintro=1&explaintext=1&exsentences=3&redirects=1&gpssearch=" +
@@ -91,7 +95,7 @@ export default {
   <!--<HeaderC presentedText="WIKI SEARCH" height="100%"/>-->
   <div class="searchDiv">
     <SearchBar
-      @searchRequested="runSearch()"
+      @searchRequested="fetchWikipedia()"
       @searchValueChanged="changeSearchText($event)"
       :currentSearchText="searchText"
     />

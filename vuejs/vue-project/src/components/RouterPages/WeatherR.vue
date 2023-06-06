@@ -23,6 +23,7 @@ import WeatherC from "@/components/Containers/WeatherC.vue";
 import SearchBar from "@/components/wikiSearch/SearchBar.vue";
 import { ref } from "vue";
 import PropositionsBox from "@/components/wikiSearch/PropositionsBox.vue";
+import VueCookie from "vue-cookie";
 
 export default {
   name: "WeatherR",
@@ -47,6 +48,13 @@ export default {
   emits: ["errorOnFetch"],
   methods: {
     getDataFromSearch: async function () {
+      if (!VueCookie.get("loginValid")) {
+        let errorCode = "NOPERM";
+        let errorMsg =
+          "Operation aborted: You don't have enough permissions to perform this action.";
+        this.$emit("errorOnFetch", { errorCode, errorMsg }); // emit error if connection issue
+        return;
+      }
       let response;
       try {
         // fetch api request of requested location

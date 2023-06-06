@@ -119,7 +119,7 @@ export default {
       this.$refs.loginDialog.close(); // close ui dialog
     },
     openLogin: function () {
-      this.$refs.loginDialog.showModal(); // close ui dialog
+      this.$refs.loginDialog.showModal(); // open ui dialog
     },
     logout: function () {
       VueCookie.delete("username"); // clear username cookie
@@ -219,16 +219,6 @@ export default {
 
 .app-content {
   min-height: 100vh;
-}
-
-#loginDialog {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--color-background-mute);
-  border: 2px solid var(--accent-c-pink-full-visibility);
-  box-shadow: 0 0 15px var(--accent-c-pink-low-visibility);
-  border-radius: var(--border-radius);
 }
 
 #loginHeader {

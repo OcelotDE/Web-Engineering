@@ -39,6 +39,7 @@ import LineChart from "@/components/Charts/LineChart.vue";
 import { nextTick } from "vue";
 import StockC from "@/components/Containers/StockC.vue";
 import SearchBar from "@/components/wikiSearch/SearchBar.vue";
+import VueCookie from "vue-cookie";
 
 export default {
   name: "StocksR",
@@ -120,6 +121,13 @@ export default {
       this.$emit("errorOnFetch", event);
     },
     updateStockName: function () {
+      if (!VueCookie.get("loginValid")) {
+        let errorCode = "NOPERM";
+        let errorMsg =
+          "Operation aborted: You don't have enough permissions to perform this action.";
+        this.$emit("errorOnFetch", { errorCode, errorMsg }); // emit error if connection issue
+        return;
+      }
       this.currentSymbol = this.tempInputSymbol;
       this.addStockInfo();
     },

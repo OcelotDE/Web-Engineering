@@ -1,6 +1,13 @@
 <template>
   <div class="flexDiv">
-    <div class="canvasDiv">
+    <button
+      class="btn btn-primary default-button"
+      id="sig-submitBtn"
+      @click="openDialog()"
+    >
+      Edit Signature
+    </button>
+    <dialog class="canvasDiv" ref="editDialog">
       <canvas
         v-if="render"
         id="sig-canvas"
@@ -15,19 +22,19 @@
         <button
           class="btn btn-primary default-button"
           id="sig-submitBtn"
-          ref="submitBtn"
+          @click="submitSignature()"
         >
           Submit Signature
         </button>
         <button
           class="btn btn-default default-button"
           id="sig-clearBtn"
-          ref="clearBtn"
+          @click="clearSignature()"
         >
           Clear Signature
         </button>
       </div>
-    </div>
+    </dialog>
     <div class="preview">
       <textarea id="sig-dataUrl" class="form-control" rows="5" ref="dataUrl">
 Data URL for your signature will go here!</textarea
@@ -43,8 +50,6 @@ Data URL for your signature will go here!</textarea
 </template>
 
 <script>
-import { nextTick, ref } from "vue";
-
 export default {
   name: "SignaturePad",
   data() {
@@ -66,6 +71,13 @@ export default {
     }
   },
   methods: {
+    openDialog: function () {
+      this.$refs.editDialog.showModal(); // open ui dialog
+    },
+
+    closeDialog: function () {
+      this.$refs.editDialog.close(); // close ui dialog
+    },
     renderSignaturePad: function () {
       // render drawing
       window.requestAnimFrame = (function (callback) {
@@ -217,36 +229,34 @@ export default {
         requestAnimFrame(drawLoop);
         renderCanvas();
       })();
+    },
+    clearCanvas: function () {
+      let canvas = this.$refs.canvas;
 
-      function clearCanvas() {
-        canvas.width = canvas.width;
-        let ctx = canvas.getContext("2d");
-        ctx.lineWidth = 4;
-      }
-
-      // Set up the UI
+      canvas.width = canvas.width;
+      let ctx = canvas.getContext("2d");
+      ctx.lineWidth = 4;
+    },
+    submitSignature: function () {
       let sigText = this.$refs.dataUrl;
       let sigImage = this.$refs.image;
-      let clearBtn = this.$refs.clearBtn;
-      let submitBtn = this.$refs.submitBtn;
-      clearBtn.addEventListener(
-        "click",
-        function (e) {
-          clearCanvas();
-          sigText.innerHTML = "Data URL for your signature will go here!";
-          sigImage.setAttribute("src", "");
-        },
-        false
-      );
-      submitBtn.addEventListener(
-        "click",
-        function (e) {
-          let dataUrl = canvas.toDataURL();
-          sigText.innerHTML = dataUrl;
-          sigImage.setAttribute("src", dataUrl);
-        },
-        false
-      );
+      let canvas = this.$refs.canvas;
+
+      let dataUrl = canvas.toDataURL();
+      sigText.innerHTML = dataUrl;
+      sigImage.setAttribute("src", dataUrl);
+
+      this.closeDialog();
+    },
+    clearSignature: function () {
+      let sigText = this.$refs.dataUrl;
+      let sigImage = this.$refs.image;
+
+      this.clearCanvas();
+      sigText.innerHTML = "Data URL for your signature will go here!";
+      sigImage.setAttribute("src", "");
+
+      this.closeDialog();
     },
   },
 };

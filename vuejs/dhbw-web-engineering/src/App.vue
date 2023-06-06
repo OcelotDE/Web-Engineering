@@ -34,7 +34,6 @@ export default {
         },
 
         fetchWikipedia: async function () {
-            console.log("fetching...")
             const response = await fetch("https://de.wikipedia.org/w/api.php?action=query&generator=prefixsearch&format=json&gpslimit=4&prop=extracts%7Cdescription&exintro=1&explaintext=1&exsentences=3&redirects=1&gpssearch=" + this.searchText + "&origin=*&prop=extracts")
 
             const json = await response.json()
