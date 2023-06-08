@@ -25,6 +25,33 @@
       <button class="default-button" @click="changeResolution()">
         Change resolution from "{{ resolution }}"
       </button>
+      <button
+        class="default-button"
+        @click="
+          this.currentSymbol = 'AMZN';
+          this.addStockInfo();
+        "
+      >
+        Watch Amazon
+      </button>
+      <button
+        class="default-button"
+        @click="
+          this.currentSymbol = 'GOOGL';
+          this.addStockInfo();
+        "
+      >
+        Watch Google
+      </button>
+      <button
+        class="default-button"
+        @click="
+          this.currentSymbol = 'IBM';
+          this.addStockInfo();
+        "
+      >
+        Watch IBM
+      </button>
       <p v-if="render" v-for="infoTitles in Object.keys(infos)">
         <b>{{ infoTitles }}</b
         >: {{ infos[infoTitles] }}
