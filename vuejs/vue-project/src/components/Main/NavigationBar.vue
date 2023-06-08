@@ -61,11 +61,9 @@ export default {
   },
   emits: ["openLoginDialogRequested", "logoutRequested"],
   setup() {
-    const mobileView = ref(false);
     const showMobileNav = ref(false);
 
     return {
-      mobileView,
       showMobileNav,
     };
   },
@@ -78,21 +76,14 @@ export default {
     updateUsername() {
       this.userName = VueCookie.get("username");
     },
-    updateValues() {
-      if (window.innerWidth < 800 && !this.mobileView) {
-        // if formfactor seems mobile
-        this.mobileView = true;
-      } else if (window.innerWidth >= 800 && this.mobileView) {
-        // if formfactor seems desktop
-        this.mobileView = false;
-      }
-      this.updateSpacerSize(); // update size of the spacer behind the navbar
-    },
     updateSpacerSize: async function () {
       for (let i = 0; i < 20; i++) {
         // loop 20 times and wait 20ms each to transition the height for mobile
         await this.sleep(20);
-        this.$refs.spacer.style.height = this.$refs.navBar.clientHeight + "px"; // update height value
+        if (this.$refs.spacer.style !== null) {
+          this.$refs.spacer.style.height =
+            this.$refs.navBar.clientHeight + "px"; // update height value
+        }
       }
     },
     sleep: function (milliseconds) {
@@ -101,8 +92,7 @@ export default {
   },
   mounted() {
     this.updateSpacerSize();
-    window.addEventListener("resize", this.updateValues, false);
-    console.log(this.navigationOptions);
+    window.addEventListener("resize", this.updateSpacerSize, false);
   },
   watch: {
     loginValid: function () {
@@ -439,7 +429,7 @@ nav ul li a:hover {
   cursor: pointer;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   #items ul {
     flex-direction: column;
     overflow: hidden;
