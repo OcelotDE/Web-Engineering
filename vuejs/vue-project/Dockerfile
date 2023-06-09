@@ -10,8 +10,12 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD [ "npm", "run", "build" ]
-CMD [ "npm", "install", "express" ]
+# Adjust the copy command to copy the built files to the correct location
+RUN cp -r dist/* /app/
+
+EXPOSE 1607
+EXPOSE 5000
+
 CMD [ "node", "serverStarter.js" ]
