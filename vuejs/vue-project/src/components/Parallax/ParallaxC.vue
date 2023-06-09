@@ -12,7 +12,7 @@
       :image-left="true"
       headline="LIGHTWEIGHT"
       description="In order to make transport as easy as possible, we made our next generation of drones as light as it never has been!"
-      image-src="src/assets/drone-hand.jpg"
+      image-src="/assets/images/drone-hand.jpg"
     />
   </ParallaxRowC>
   <ParallaxRowC ref="cameraRef" :filled-background="false">
@@ -27,7 +27,7 @@
       :image-left="false"
       headline="ALL-TERRAIN"
       description="Suited for all kinds of terrain thanks to our intelligent rotor control."
-      image-src="src/assets/drone-rock.jpg"
+      image-src="/assets/images/drone-rock.jpg"
     />
   </ParallaxRowC>
   <ParallaxRowC ref="batteryRef" :filled-background="false">
@@ -158,7 +158,7 @@ export default {
     let clock = new THREE.Clock();
 
     loader.load(
-      "src/assets/drone.glb",
+      "/assets/3d models/drone.glb",
       function (gltf) {
         gltf.scene.scale.set(0.1, 0.1, 0.1);
         gltf.scene.rotation.y = THREE.MathUtils.degToRad(180);
