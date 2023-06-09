@@ -429,7 +429,7 @@ nav ul li a:hover {
   cursor: pointer;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 850px) {
   #items ul {
     flex-direction: column;
     overflow: hidden;
@@ -442,7 +442,7 @@ nav ul li a:hover {
   }
 
   .mobileHide {
-    height: 170px !important;
+    height: 250px !important;
   }
 }
 

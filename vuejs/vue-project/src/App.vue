@@ -13,6 +13,7 @@ import Weather from "./components/RouterPages/WeatherR.vue";
 import Wiki from "./components/RouterPages/WikiR.vue";
 import Stocks from "./components/RouterPages/StocksR.vue";
 import Contact from "./components/RouterPages/ContactR.vue";
+import RSS from "./components/RouterPages/RSSR.vue";
 
 import FooterC from "@/components/Main/FooterC.vue";
 import ErrorC from "@/components/Main/ErrorC.vue";
@@ -75,6 +76,13 @@ export default {
           HeaderTitle: "CONTACT",
           NavTitle: "Contact",
           NavRoute: "contact",
+        },
+        "/rss": {
+          Component: shallowRef(RSS),
+          HeaderHeight: "30vh",
+          HeaderTitle: "RSS",
+          NavTitle: "RSS",
+          NavRoute: "rss",
         },
       },
     };
