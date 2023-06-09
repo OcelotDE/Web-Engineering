@@ -16,12 +16,14 @@ export default {
     headline: String,
     description: String,
     imageLeft: Boolean,
-    imageSrc: String
+    imageSrc: String,
   },
   mounted: function () {
-    this.$el.querySelector("#imageDiv").style.backgroundImage = `url("${this.imageSrc}")`
-  }
-}
+    this.$el.querySelector(
+      "#imageDiv"
+    ).style.backgroundImage = `url("${this.imageSrc}")`;
+  },
+};
 </script>
 
 <style scoped>
@@ -39,7 +41,7 @@ export default {
 }
 
 #imageDiv {
-  background-image: url("src/assets/drone-hand.jpg");
+  background-image: url("/assets/images/drone-hand.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

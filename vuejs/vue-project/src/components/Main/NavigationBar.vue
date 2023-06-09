@@ -9,11 +9,19 @@
       <div id="items">
         <ul :class="{ mobileHide: showMobileNav }" ref="navList">
           <li v-if="!loginValid">
-            <img src="src/assets/lock.svg" alt="login icon" class="lockicon" />
+            <img
+              src="/assets/images/lock.svg"
+              alt="login icon"
+              class="lockicon"
+            />
             <a @click="this.$emit('openLoginDialogRequested')">Login</a>
           </li>
           <li v-if="loginValid">
-            <img src="src/assets/lock.svg" alt="logout icon" class="lockicon" />
+            <img
+              src="/assets/images/lock.svg"
+              alt="logout icon"
+              class="lockicon"
+            />
             <a @click="this.$emit('logoutRequested')">Logout</a>
           </li>
           <li v-for="option in navigationOptions">
@@ -113,8 +121,8 @@ button {
   height: 2rem;
   width: 2rem;
   background-color: #fff;
-  -webkit-mask: url(src/assets/logo.svg) no-repeat center;
-  mask: url(src/assets/logo.svg) no-repeat center;
+  -webkit-mask: url(/assets/images/logo.svg) no-repeat center;
+  mask: url(/assets/images/logo.svg) no-repeat center;
 }
 
 .navSpacing {
