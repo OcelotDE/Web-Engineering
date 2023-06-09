@@ -13,4 +13,5 @@ COPY . .
 EXPOSE 3000
 
 CMD [ "npm", "run", "build" ]
-CMD [ "npm", "run", "preview" ]
+CMD [ "npm", "install", "express" ]
+CMD [ "node", "serverStarter.js" ]

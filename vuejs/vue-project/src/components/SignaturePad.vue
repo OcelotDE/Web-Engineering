@@ -40,6 +40,7 @@
 Data URL for your signature will go here!</textarea
       >
       <img
+        v-show="renderImage"
         id="sig-image"
         src=""
         alt="Your signature will go here!"
@@ -55,6 +56,7 @@ export default {
   data() {
     return {
       render: true,
+      renderImage: false,
     };
   },
   mounted() {
@@ -231,6 +233,7 @@ export default {
       })();
     },
     clearCanvas: function () {
+      this.renderImage = false;
       let canvas = this.$refs.canvas;
 
       canvas.width = canvas.width;
@@ -238,6 +241,8 @@ export default {
       ctx.lineWidth = 4;
     },
     submitSignature: function () {
+      this.renderImage = true;
+
       let sigText = this.$refs.dataUrl;
       let sigImage = this.$refs.image;
       let canvas = this.$refs.canvas;
@@ -249,6 +254,8 @@ export default {
       this.closeDialog();
     },
     clearSignature: function () {
+      this.renderImage = false;
+
       let sigText = this.$refs.dataUrl;
       let sigImage = this.$refs.image;
 
@@ -297,8 +304,6 @@ export default {
 
   width: 320px;
   height: 100px;
-
-  margin-left: 10px;
 }
 
 #sig-dataUrl {
@@ -312,5 +317,13 @@ export default {
 
   width: 320px;
   height: 100px;
+}
+
+@media screen and (max-width: 850px) {
+  #sig-dataUrl,
+  #sig-image {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 </style>

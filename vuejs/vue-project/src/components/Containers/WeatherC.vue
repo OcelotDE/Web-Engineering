@@ -48,7 +48,6 @@ export default {
   },
   mounted() {
     const successCallback = (position) => {
-      console.log(position);
       this.getData(position);
     };
 

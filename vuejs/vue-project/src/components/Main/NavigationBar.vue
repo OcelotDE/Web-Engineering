@@ -475,7 +475,6 @@ nav ul li a:hover {
   stroke-dashoffset: -64px;
 }
 .ham8.active .middle {
-  //stroke-dashoffset: -20px;
   transform: rotate(90deg);
 }
 .ham8.active .bottom {
