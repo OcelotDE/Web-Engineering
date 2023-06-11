@@ -15,7 +15,6 @@ RUN npm run build
 # Adjust the copy command to copy the built files to the correct location
 RUN cp -r dist/* /app/
 
-EXPOSE 1607
 EXPOSE 5000
 
 CMD [ "node", "serverStarter.js" ]
